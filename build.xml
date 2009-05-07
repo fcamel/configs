@@ -1,4 +1,8 @@
-<project name="OrganicObject" default="test"> 
+<project name="OrganicObject" default="test">
+    <!-- Define customized constant values -->
+    <property name="jar" value="PKG.jar"/>
+    <property name="test_target" value="PKG.AllUnitTestSuite"/>
+    
     <!-- Define constant values -->
     <property name="src.dir" value="src"/>
     <property name="src_main.dir" value="${src.dir}/main"/>
@@ -39,7 +43,7 @@
     <!-- Test -->
     <target name="test_package" depends="compile_test"> 
         <junit fork="yes" haltonfailure="yes" printsummary="yes"> 
-            <test name="PACKAGE.AllUnitTestSuite"/>
+            <test name="${test_target}"/>
             <formatter type="plain" usefile="false" />
             <classpath refid="classpath" />
         </junit> 
@@ -65,7 +69,7 @@
     <!-- Build jar -->
     <target name="jar" depends="compile">
         <mkdir dir="${build_lib.dir}"/>
-        <jar destfile="${build_lib.dir}/JAR.jar" basedir="${build_main.dir}" />
+        <jar destfile="${build_lib.dir}/${jar}" basedir="${build_main.dir}" />
     </target>
 
 </project> 
