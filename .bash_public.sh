@@ -13,6 +13,21 @@ alias rm='rm -i'
 alias vnc='vncserver -geometry 1440x900 -depth 24'
 alias vnc2='vncserver -geometry 1920x1200 -depth 24'
 
+alias ep='export PYTHONPATH=`pwd`'
+alias no='nosetests --processes=4'
+
+function gp() {
+    if [ "$1" = "-p" ]; then
+        shift
+        \ls *.py */*.py | perl -ne 'print $_ if !($_ =~ /.*_test\.py/)'  | xargs grep -i --color $1
+    elif [ "$1" = "-t" ]; then
+        shift
+        \ls *.py */*.py | perl -ne 'print $_ if $_ =~ /.*_test\.py/'  | xargs grep -i --color $1
+    else
+        g "$1" *.py */*.py
+    fi
+}
+
 export EDITOR='vim'
 export PAGER='less'
 export LESS=-ir
@@ -37,3 +52,16 @@ function my_cd() {
 }
 
 alias cd=my_cd
+
+stty erase ^?
+
+# colorful man page
+export PAGER="`which less` -s"
+export BROWSER="$PAGER"
+export LESS_TERMCAP_mb=$'\E[0;32m'
+export LESS_TERMCAP_md=$'\E[0;32m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[0;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[0;33m'
