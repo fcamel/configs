@@ -1,5 +1,6 @@
 alias p='ps auxw'
 alias g='grep -i --color'
+alias gg='grep -i --color=always'
 alias ll='ls -lF --color'
 alias ltr='ls -lFtr --color'
 alias ls='ls -F --color'
@@ -35,7 +36,6 @@ export LESS=-ir
 export PS1="[\u@wiki \w ]\n$ "
 
 # Mercurial
-source /home/hg/extensions/bash-completion
 export HGMERGE=kdiff3
 export HGENCODING=utf-8
 
