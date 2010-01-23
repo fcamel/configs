@@ -33,7 +33,10 @@ export EDITOR='vim'
 export PAGER='less'
 export LESS=-ir
 
-export PS1="[\u@wiki \w ]\n$ "
+if [ "$host" = "" ]; then
+    host=$(hostname)
+fi
+export PS1="[\u@$host \w ]\n$ "
 
 # Mercurial
 export HGMERGE=kdiff3
@@ -44,7 +47,7 @@ function set_hg_rep() {
     if [ "$hg_rep" != "" ]; then
         hg_rep="(\033[1;31m$(pwd | awk -F/ '{ print $5 }')\033[m)"
     fi
-    export PS1="[\u@wiki \w $hg_rep]\n$ "
+    export PS1="[\u@$host \w $hg_rep]\n$ "
 }
 
 function my_cd() {
