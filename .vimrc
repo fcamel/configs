@@ -64,3 +64,7 @@ function OpenCorrespondingFileH()
 endfunction
 
 map ,h :call OpenCorrespondingFileH()<C-M>
+
+" Python
+"imap ddd import codecode.InteractiveConsole(locals=locals()).interact()
+imap ddd import IPythonIPython.Shell.IPShellEmbed()()
