@@ -15,6 +15,8 @@ iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
 autocmd BufRead,BufNewFile *.sh map <F10> :% w !bash<CR>
 autocmd BufRead,BufNewFile *.pl map <F10> :% w !perl<CR>
 autocmd BufRead,BufNewFile *.py map <F10> :% w !python<CR>
+autocmd BufRead,BufNewFile *.rb map <F10> :% w !ruby<CR>
+autocmd BufRead,BufNewFile *.py vmap f :w !python<CR>
 autocmd BufRead,BufNewFile *.py set sw=4 tabstop=4 smarttab expandtab
 set sw=4 tabstop=4 smarttab expandtab
 
@@ -64,6 +66,7 @@ function OpenCorrespondingFileH()
 endfunction
 
 map ,h :call OpenCorrespondingFileH()<C-M>
+map ,n :call OpenCorrespondingFileH()<C-M>
 
 " Python
 "imap ddd import codecode.InteractiveConsole(locals=locals()).interact()

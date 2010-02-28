@@ -1,0 +1,10 @@
+[user]
+	name = fcamel@andLinux
+	email = fcamel@gmail.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[alias]
+    ci = commit
+    st = status
