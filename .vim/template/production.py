@@ -1,12 +1,8 @@
-#!/usr/bin/env python2.5
+#!/usr/bin/env python2.6
 # -*- encoding: utf8 -*-
 
 import sys
 import optparse
-
-
-__author__ = 'fcamel'
-
 
 def main(args):
     '''\
