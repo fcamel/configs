@@ -772,3 +772,5 @@ bindkey -k k8 next
 
 #defencoding big5
 
+# use 256 colors
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
