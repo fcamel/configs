@@ -1,4 +1,7 @@
-alias p='ps auxw'
+set -o vi
+bind -m vi-insert "C-l":clear-screen
+
+alias p='ps -eLFw'
 alias g='grep -i --color'
 alias gg='grep -i --color=always'
 alias ll='ls -lF --color'
@@ -16,6 +19,8 @@ alias vnc2='vncserver -geometry 1920x1200 -depth 24'
 
 alias ep='export PYTHONPATH=`pwd`'
 alias no='nosetests --processes=4'
+
+alias hgst='hg st -a -r -d -m'
 
 function gp() {
     if [ "$1" = "-p" ]; then
