@@ -21,6 +21,10 @@ alias ep='export PYTHONPATH=`pwd`'
 alias no='nosetests --processes=4'
 
 alias hgst='hg st -a -r -d -m'
+alias hlog='hg log -G | less'
+alias hlogv='hg log -G -v | less'
+
+alias sqlite3='rlwrap -a -r sqlite3'
 
 function gp() {
     if [ "$1" = "-p" ]; then
