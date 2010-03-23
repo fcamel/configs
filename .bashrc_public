@@ -1,6 +1,3 @@
-set -o vi
-bind -m vi-insert "C-l":clear-screen
-
 alias p='ps -eLFw'
 alias g='grep -i --color'
 alias gg='grep -i --color=always'
@@ -17,16 +14,44 @@ alias rm='rm -i'
 alias vnc='vncserver -geometry 1440x900 -depth 24'
 alias vnc2='vncserver -geometry 1920x1200 -depth 24'
 
-alias ep='export PYTHONPATH=`pwd`'
-alias no='nosetests --processes=4'
+# Provide tab completion for sqlite3.
+[ $(which rlwrap) ] && alias sqlite3='rlwrap -a -r sqlite3'
 
-alias hgst='hg st -a -r -d -m'
-alias hlog='hg log -G | less'
-alias hlogv='hg log -G -v | less'
+export PAGER='less'
+export LESS=-ir
 
-source ~/.bash_completions/mercurial_bash_completion
+# Define your prefered "hostname" in .bashrc. Otherwise use the real hostname.
+if [ "$host" = "" ]; then
+    host=$(hostname)
+fi
+export PS1="[\u@$host \w ]\n$ "
 
-alias sqlite3='rlwrap -a -r sqlite3'
+# colorful man page
+export PAGER="`which less` -s"
+export BROWSER="$PAGER"
+export LESS_TERMCAP_mb=$'\E[0;32m'
+export LESS_TERMCAP_md=$'\E[0;32m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[0;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[0;33m'
+
+stty erase ^?
+
+
+#-------------------------------------------------------------------------------
+# VI
+#-------------------------------------------------------------------------------
+export EDITOR='vim'
+
+set -o vi
+bind -m vi-insert "C-l":clear-screen
+
+
+#-------------------------------------------------------------------------------
+# Python
+#-------------------------------------------------------------------------------
 
 function gp() {
     if [ "$1" = "-p" ]; then
@@ -40,19 +65,31 @@ function gp() {
     fi
 }
 
-export EDITOR='vim'
-export PAGER='less'
-export LESS=-ir
+alias ep='export PYTHONPATH=`pwd`'
+alias no='nosetests --processes=4'
 
-if [ "$host" = "" ]; then
-    host=$(hostname)
-fi
-export PS1="[\u@$host \w ]\n$ "
 
+#-------------------------------------------------------------------------------
+# Django
+#-------------------------------------------------------------------------------
+
+source ~/.bash_completions/django_bash_completion
+
+
+#-------------------------------------------------------------------------------
 # Mercurial
+#-------------------------------------------------------------------------------
+
+alias hgst='hg st -a -r -d -m'
+alias hlog='hg log -G | less'
+alias hlogv='hg log -G -v | less'
+
+source ~/.bash_completions/mercurial_bash_completion
+
 export HGMERGE=kdiff3
 export HGENCODING=utf-8
 
+# Show repository name in promp. Not a good solution.
 function set_hg_rep() {
     hg_rep=$(pwd | awk -F/ '{ print $5 }')
     if [ "$hg_rep" != "" ]; then
@@ -66,18 +103,3 @@ function my_cd() {
 }
 
 alias cd=my_cd
-
-stty erase ^?
-
-# colorful man page
-export PAGER="`which less` -s"
-export BROWSER="$PAGER"
-export LESS_TERMCAP_mb=$'\E[0;32m'
-export LESS_TERMCAP_md=$'\E[0;32m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[0;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[0;33m'
-
-source ~/.bash_completions/django_bash_completion
