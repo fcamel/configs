@@ -24,6 +24,8 @@ alias hgst='hg st -a -r -d -m'
 alias hlog='hg log -G | less'
 alias hlogv='hg log -G -v | less'
 
+source ~/.bash_completions/mercurial_bash_completion
+
 alias sqlite3='rlwrap -a -r sqlite3'
 
 function gp() {
