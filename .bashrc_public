@@ -1,3 +1,5 @@
+# NOTE: source bashrc_private before this
+
 alias p='ps -eLFw'
 alias g='grep -i --color'
 alias gg='grep -i --color=always'
@@ -56,25 +58,31 @@ bind -m vi-insert "C-l":clear-screen
 function gp() {
     if [ "$1" = "-p" ]; then
         shift
-        \ls *.py */*.py | perl -ne 'print $_ if !($_ =~ /.*_test\.py/)'  | xargs grep -i --color $1
+        \ls *.py */*.py */*/*.py */*/*/*.py | perl -ne 'print $_ if !($_ =~ /.*_test\.py/)'  | xargs grep -i --color $1
     elif [ "$1" = "-t" ]; then
         shift
-        \ls *.py */*.py | perl -ne 'print $_ if $_ =~ /.*_test\.py/'  | xargs grep -i --color $1
+        \ls *.py */*.py */*/*.py */*/*/*.py | perl -ne 'print $_ if $_ =~ /.*_test\.py/'  | xargs grep -i --color $1
     else
-        g "$1" *.py */*.py
+        g "$1" *.py */*.py */*/*.py */*/*/*.py
     fi
 }
 
 alias ep='export PYTHONPATH=`pwd`'
+alias epp='export PYTHONPATH=`pwd`/../'
 alias no='nosetests --processes=4'
 
+#-------------------------------------------------------------------------------
+# pip
+#-------------------------------------------------------------------------------
+
+export PIP_REQUIRE_VIRTUALENV=true
+source ~/.bash_completions/pip
 
 #-------------------------------------------------------------------------------
 # Django
 #-------------------------------------------------------------------------------
 
 source ~/.bash_completions/django_bash_completion
-
 
 #-------------------------------------------------------------------------------
 # Mercurial
@@ -102,4 +110,12 @@ function my_cd() {
     \cd $1 && set_hg_rep
 }
 
-alias cd=my_cd
+#alias cd=my_cd
+
+#-------------------------------------------------------------------------------
+# Other
+#-------------------------------------------------------------------------------
+
+# Because Django also set the completion function of python,
+# place this line after Django to override it.
+source ~/.bash_completions/python_module
