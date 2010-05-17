@@ -661,16 +661,6 @@ hardstatus alwayslastline "%?%{WB}%-Lw%?%{BW}%n*%f %t%?(%u)%?%?%{WB}%+Lw%? %{WB}
 # bind R # unbound by default
 # bind R screen links http://www.netmind.com/URL-minder/new/register.html
   bind R screen links http://www.linuxtag-brb.de/vortragsprogramm.html
-#
-#
-# SLRN - newsreader
-  bind S screen -t 'slrn' 3 slrn -n -C -k0
-# bind S screen -t 'SED' 3 links http://www.guckes.net/sed/
-# see also:
-# http://www.slrn.org  ----->
-# http://slrn.sourceforge.net
-# http://www.guckes.net/slrn/ (old)
-#
 # bind T # unbound by default
   bind T screen -t TRASH ssh trash
 #
@@ -694,9 +684,6 @@ hardstatus alwayslastline "%?%{WB}%-Lw%?%{BW}%n*%f %t%?(%u)%?%?%{WB}%+Lw%? %{WB}
 # bind W screen -t WETTER  4 links http://www.wetteronline.de/cgi-bin/citybild?PLZ=01099&PLZN=Dresden
 # bind W screen -t WEBSTER 4 links http://www.m-w.com/
 # bind W screen -t NEWS slrn -h news.hostsharing.net
-#
-#      X - a fast way to lock the current screen.
-  bind X lockscreen
 #
 # bind Y exec !!! echo -n http://www.guckes.net/
   bind Y stuff http://www.guckes.net/
@@ -767,6 +754,29 @@ bindkey -k k8 next
 
 
 #######################################################
+
+
+# For Django development
+screen bash
+title 'server'
+
+screen bash
+title 'run'
+
+screen bash
+title 'app'
+
+screen bash
+title 'shell'
+
+screen bash
+title 'template'
+
+screen bash
+title 'js / css'
+
+screen bash
+title 'push'
 
 #shelltitle default
 
