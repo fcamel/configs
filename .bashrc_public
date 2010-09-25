@@ -16,6 +16,12 @@ alias rm='rm -i'
 alias vnc='vncserver -geometry 1440x900 -depth 24'
 alias vnc2='vncserver -geometry 1920x1200 -depth 24'
 
+# For virtualenv
+alias cdve='cd $(echo $PATH | ruby -ne '"'"'puts split(":")[0].split("/")[0..-2].join("/")'"'"')'
+alias cdvesrc='cd $(echo $PATH | ruby -ne '"'"'puts split(":")[0].split("/")[0..-2].join("/")'"'"')/src'
+alias cdvesite='cd $(echo $PATH | ruby -ne '"'"'puts split(":")[0].split("/")[0..-2].join("/")'"'"')/lib/python2.5/site-packages/'
+
+
 # Provide tab completion for sqlite3.
 [ $(which rlwrap) ] && alias sqlite3='rlwrap -a -r sqlite3'
 
