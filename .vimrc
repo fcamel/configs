@@ -1,6 +1,5 @@
-map ; ddekpej
 syntax on
-"set ignorecase
+set ignorecase
 set ru
 set nu
 set showcmd
@@ -17,7 +16,7 @@ autocmd BufRead,BufNewFile *.pl map <F10> :% w !perl<CR>
 autocmd BufRead,BufNewFile *.rb map <F10> :% w !ruby<CR>
 set sw=4 tabstop=4 smarttab expandtab
 
-map e <C-w>
+map t <C-w>
 map ,, :tabe %<CR>
 imap jj <ESC>
 imap jf <ESC>
@@ -53,4 +52,9 @@ map ,n :call OpenCorrespondingFileH()<C-M>
 
 
 "autocmd BufRead,BufNewFile *.lisp so ~/.vim/ftplugin/lisp/limp.vim
+filetype plugin indent on
 filetype plugin on
+
+:set foldmethod=indent
+
+nnoremap <F12> :TlistToggle<CR>
