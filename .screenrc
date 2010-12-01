@@ -755,29 +755,6 @@ bindkey -k k8 next
 
 #######################################################
 
-
-# For Django development
-screen bash
-title 'server'
-
-screen bash
-title 'run'
-
-screen bash
-title 'app'
-
-screen bash
-title 'shell'
-
-screen bash
-title 'template'
-
-screen bash
-title 'js / css'
-
-screen bash
-title 'push'
-
 #shelltitle default
 
 #defencoding big5
