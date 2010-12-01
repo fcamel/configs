@@ -9,6 +9,8 @@ alias ls='ls -F --color'
 alias scr='screen'
 alias h='history'
 
+alias ms='sudo -u mysql rsync -av --delete'
+
 alias mv='mv -i'
 alias cp='cp -i'
 alias rm='rm -i'
@@ -21,6 +23,7 @@ alias cdve='cd $(echo $PATH | ruby -ne '"'"'puts split(":")[0].split("/")[0..-2]
 alias cdvesrc='cd $(echo $PATH | ruby -ne '"'"'puts split(":")[0].split("/")[0..-2].join("/")'"'"')/src'
 alias cdvesite='cd $(echo $PATH | ruby -ne '"'"'puts split(":")[0].split("/")[0..-2].join("/")'"'"')/lib/python2.5/site-packages/'
 
+alias pc='pycscope.py -R .'
 
 # Provide tab completion for sqlite3.
 [ $(which rlwrap) ] && alias sqlite3='rlwrap -a -r sqlite3'
@@ -125,7 +128,6 @@ function my_cd() {
 # Fabric
 #-------------------------------------------------------------------------------
 source ~/.bash_completions/fab_completion.bash
-
 
 #-------------------------------------------------------------------------------
 # Other
