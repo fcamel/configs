@@ -37,6 +37,14 @@ if [ "$host" = "" ]; then
 fi
 export PS1="[\u@$host \w ]\n$ "
 
+# Use the following PS1 if you've installed hg-prompt and enable it in your ~/.hgrc
+# Show mercurial branch
+# hg_ps1() {
+#     hg prompt "{branch}:{node|short}:{status}" 2> /dev/null
+# }
+# export PS1='[\u@$host \w ($(hg_ps1))]\n$ '
+
+
 # colorful man page
 export PAGER="`which less` -s"
 export BROWSER="$PAGER"
