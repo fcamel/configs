@@ -5,9 +5,6 @@
 " Press F10 to run current file.
 autocmd BufRead,BufNewFile *.py map <F10> :% w !python<CR>
 
-" Use V to select lines and press f to run the selected code block.
-autocmd BufRead,BufNewFile *.py vmap f :w !python<CR>
-
 " Follow Python coding style: use four spaces to indent codes.
 autocmd BufRead,BufNewFile *.py set sw=4 tabstop=4 smarttab expandtab
 
@@ -29,3 +26,5 @@ endif
 
 " Press ddd to insert codes that call IPython to help debug.
 imap ddd import IPythonIPython.Shell.IPShellEmbed()()
+
+hi TempKeyword ctermfg=red

@@ -58,3 +58,13 @@ filetype plugin on
 :set foldmethod=indent
 
 nnoremap <F12> :TlistToggle<CR>
+
+"use pydiction
+let g:pydiction_location = '~/.vim/pydiction/complete-dict'
+
+" map clipboard to the default register
+set clipboard=unnamed
+
+" temporarily highlight keyword 
+nmap <leader>* :syn match TempKeyword /\<<C-R>=expand("<cword>")<CR>\>/<CR>
+nmap <leader>c :syn clear TempKeyword<CR>
