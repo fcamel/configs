@@ -1,0 +1,32 @@
+[ui]
+username = fcamel@some-host
+editor = /usr/bin/vim
+
+[defaults]
+log = --color always
+diff = --color auto
+
+[extensions]
+color =
+fetch =
+convert =
+graphlog =
+bookmarks =
+mq =
+record =
+hgattic = /home/hg/extensions/hgattic/attic.py
+rebase =
+transplant =
+prompt = /home/hg/extensions/hg-prompt/prompt.py
+
+[bookmarks]
+track.current = True
+
+[trusted]
+users = 
+
+[tortoisehg]
+editor = /usr/bin/gvim
+
+[extdiff] 
+cmd.vdiff = kdiff3 
