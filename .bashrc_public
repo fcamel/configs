@@ -61,6 +61,9 @@ stty erase ^?
 # turn on bash completion for sudo
 complete -cf sudo
 
+# shortcut for cd
+source /usr/share/doc/cdargs/examples/cdargs-bash.sh
+
 
 #-------------------------------------------------------------------------------
 # VI
@@ -149,3 +152,13 @@ source ~/.bash_completions/python_module
 # Java
 #-------------------------------------------------------------------------------
 export JAVA_HOME='/usr/lib/jvm/java-6-sun/'
+
+#-------------------------------------------------------------------------------
+# Trace code
+#-------------------------------------------------------------------------------
+
+function see() {
+    vi `which $1`
+}
+
+complete -c command see
