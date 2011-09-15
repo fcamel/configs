@@ -136,7 +136,7 @@
 # ===============================================================
 # VARIABLES - Number values
 # ===============================================================
-  defscrollback         10000            # default: 100
+  defscrollback         100000            # default: 100
 # msgminwait            3               # default: 1
   silencewait           15              # default: 30
 #
@@ -759,5 +759,6 @@ bindkey -k k8 next
 
 #defencoding big5
 
+term xterm
 # use 256 colors
 termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
