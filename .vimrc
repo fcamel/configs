@@ -18,6 +18,8 @@ set sw=4 tabstop=4 smarttab expandtab
 
 map t <C-w>
 map ,, :tabe %<CR>
+map qq :q<CR>
+map qa :wind q<CR>
 imap jj <ESC>
 imap jf <ESC>
 imap fj <ESC>
