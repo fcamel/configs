@@ -81,12 +81,12 @@ bind -m vi-insert "C-l":clear-screen
 function gp() {
     if [ "$1" = "-p" ]; then
         shift
-        \ls *.py */*.py */*/*.py */*/*/*.py | perl -ne 'print $_ if !($_ =~ /.*_test\.py/)'  | xargs grep -i --color $1
+        find -name "*.py" | perl -ne 'print $_ if !($_ =~ /.*_test\.py/)'  | xargs grep -i --color $1
     elif [ "$1" = "-t" ]; then
         shift
-        \ls *.py */*.py */*/*.py */*/*/*.py | perl -ne 'print $_ if $_ =~ /.*_test\.py/'  | xargs grep -i --color $1
+        find -name "*.py" | perl -ne 'print $_ if $_ =~ /.*_test\.py/'  | xargs grep -i --color $1
     else
-        g "$1" *.py */*.py */*/*.py */*/*/*.py
+        find -name "*.py" | xargs grep -i --color "$1"
     fi
 }
 
