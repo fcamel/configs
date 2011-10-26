@@ -70,3 +70,11 @@ set clipboard=unnamed
 " temporarily highlight keyword 
 nmap <leader>* :syn match TempKeyword /\<<C-R>=expand("<cword>")<CR>\>/<CR>
 nmap <leader>c :syn clear TempKeyword<CR>
+
+" C++
+function LoadCppMain()
+    0r ~/.vim/template/production.cpp
+    normal Gddkk
+endfunction
+
+autocmd BufNewFile *.cpp call LoadCppMain()
