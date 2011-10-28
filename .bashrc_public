@@ -1,5 +1,7 @@
 # NOTE: source bashrc_private before this
 
+alias oc=octave
+alias vi='vi -X'
 alias p='ps -eLFw'
 alias g='grep -i --color'
 alias gg='grep -i --color=always'
