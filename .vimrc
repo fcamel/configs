@@ -71,10 +71,17 @@ set clipboard=unnamed
 nmap <leader>* :syn match TempKeyword /\<<C-R>=expand("<cword>")<CR>\>/<CR>
 nmap <leader>c :syn clear TempKeyword<CR>
 
-" C++
+" C/C++
 function LoadCppMain()
     0r ~/.vim/template/production.cpp
     normal Gddkk
 endfunction
 
 autocmd BufNewFile *.cpp call LoadCppMain()
+
+function LoadCMain()
+    0r ~/.vim/template/production.c
+    normal Gddkk
+endfunction
+
+autocmd BufNewFile *.c call LoadCMain()
