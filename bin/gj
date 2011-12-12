@@ -1,0 +1,98 @@
+#!/usr/bin/env python
+# -*- encoding: utf8 -*-
+
+import re
+import subprocess
+import sys
+import optparse
+import os
+
+
+__author__ = 'fcamel'
+
+
+def gid(pattern):
+    cmd = ['gid', pattern]
+    process = subprocess.Popen(cmd,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+    return process.stdout.read().split('\n')
+
+def show_list(tokens_list, pattern):
+    def yellow(text):
+        return '\033[1;33m%s\033[0m' % text
+
+    def yellow_background(text):
+        return '\033[30;43m%s\033[0m' % text
+
+    def green(text):
+        return '\033[1;32m%s\033[0m' % text
+
+    def red(text):
+        return '\033[1;31m%s\033[0m' % text
+
+    for i, (filename, line_number, code) in enumerate(tokens_list):
+        code = code.replace(pattern, yellow_background(pattern))
+        print '(%s) %s:%s:%s' % (red(i + 1), yellow(line_number), green(filename), code)
+
+def filter_filename(tokens_list, pattern):
+    return [tokens for tokens in tokens_list if re.search(pattern, tokens[0])]
+
+def main():
+    '''\
+    %prog [options] <pattern>
+
+    Grep pattern in source codes using id-utils.
+    Before starting, type 'mkid' in your source root first.
+    '''
+    parser = optparse.OptionParser(usage=main.__doc__)
+    options, args = parser.parse_args()
+
+    if len(args) != 1:
+        parser.print_help()
+        sys.exit(1)
+
+    if not os.path.exists('ID'):
+        print 'Database file "ID" is not found. Have you run "mkid"?'
+        return 2
+
+    pattern, = args
+
+    lines = gid(pattern)
+
+    tokens_list = [line.split(':', 2) for line in lines]
+    tokens_list = [ts for ts in tokens_list if len(ts) == 3]
+
+    while True:
+        if not tokens_list:
+            print 'No file matched.'
+            return 0
+
+        show_list(tokens_list, pattern)
+        response = raw_input("\n>> Input number to select a file, or 'f' to filter filename: ")
+        if not response:
+            return 0
+
+        if response != 'f':
+            break
+        response = raw_input("\n>> Input regex pattern: ")
+        tokens_list = filter_filename(tokens_list, response)
+
+    try:
+        n = int(response)
+    except ValueError, e:
+        print 'Invalid input.'
+        return 1
+
+    if n < 1 or n > len(tokens_list):
+        print 'Invalid input.'
+        return 1
+
+    filename, line, _ = tokens_list[n - 1]
+
+    cmd = 'vi %s +%s' % (filename, line)
+    return os.system(cmd)
+
+
+if __name__ == '__main__':
+    sys.exit(main())
