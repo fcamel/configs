@@ -31,6 +31,7 @@ def show_list(tokens_list, patterns):
     def red(text):
         return '\033[1;31m%s\033[0m' % text
 
+    os.system('clear')
     for i, (filename, line_number, code) in enumerate(tokens_list):
         for pattern in patterns:
             code = code.replace(pattern, yellow_background(pattern))
