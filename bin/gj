@@ -52,7 +52,7 @@ def main():
 
     Example of usages:
         $ gj MyClient         # find any snippet which contains MyClient
-        $ gj class MyClient   # find the definition.
+        $ gj MyClient class   # find the definition.
     '''
     parser = optparse.OptionParser(usage=main.__doc__)
     options, args = parser.parse_args()
@@ -83,13 +83,12 @@ def main():
             return 0
 
         show_list(tokens_list, patterns)
-        response = raw_input("\n>> Input number to select a file, or 'f' to filter filename: ")
+        response = raw_input("\n>> Input number to select a file, or type string (regex) to filter filename: ")
         if not response:
             return 0
 
-        if response != 'f':
+        if re.match('\d+', response):
             break
-        response = raw_input("\n>> Input regex pattern: ")
         tokens_list = filter_filename(tokens_list, response)
 
     try:
