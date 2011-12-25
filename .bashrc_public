@@ -33,6 +33,8 @@ alias pc='pycscope.py -R .'
 export PAGER='less'
 export LESS=-ir
 
+export PATH=$PATH:~/bin
+
 # Define your prefered "hostname" in .bashrc. Otherwise use the real hostname.
 if [ "$host" = "" ]; then
     host=$(hostname)
@@ -164,3 +166,5 @@ function see() {
 }
 
 complete -c command see
+
+ulimit -c unlimited

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+LD=/usr/bin/ld
+GNULD=${LD}.bfd
+GOLD=${LD}.gold
+
+
+current=$(\ls -l $LD | awk '{print $NF}')
+if [ $current = $GNULD ]; then
+    sudo ln -fs ${GOLD} ${LD}
+    echo "switch ld to ${GOLD}"
+else
+    sudo ln -fs ${GNULD} ${LD}
+    echo "switch ld to ${GNULD}"
+fi

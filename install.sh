@@ -6,3 +6,10 @@ do
 done
 
 echo -e "\nsource ~/.bashrc_public" >> ~/.bashrc
+echo -e "\nsource ~/.bashrc_private" >> ~/.bashrc
+
+touch ~/.bashrc_private
+chmod 600 ~/.bashrc_private
+
+mkdir -p ~/bin/
+cp -r bin/* ~/bin/

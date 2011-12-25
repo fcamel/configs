@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "pg <pattern>"
+    echo 
+    echo "Equal to \"ps -eLFw | grep -i --color <pattern>\" with a column head."
+    exit 1
+fi
+
+echo "UID        PID  PPID   LWP  C NLWP    SZ   RSS PSR STIME TTY          TIME CMD"
+ps -eLFw | grep -i --color $1
