@@ -1,0 +1,47 @@
+#!/bin/bash
+
+usage() {
+    echo "svn2hg <svn-revision> [-p]"
+    echo
+    echo "Find out the mercurial revision given svn revision."
+    echo
+    echo "  -p:   show the patch and the list of changed files of that revision instead."
+    echo
+}
+
+if [ $# -lt 1 -o $# -gt 2 ]; then
+    usage
+    exit 1
+fi
+
+
+v=$1
+show_patch=
+if [ $# -eq 2 ]; then
+    if [ $1 = "-p" ]; then
+        v=$2
+        show_patch=true
+    elif [ $2 = "-p" ]; then
+        show_patch=true
+    else
+        usage
+        exit 1
+    fi
+fi
+
+
+map="$(hg root)/.hg/svn/rev_map"
+if [ ! -f "$map" ]; then
+    echo "Cannot find the revision mapping file."
+    echo
+    exit 2
+fi
+
+hg_revision=$(\grep "^${v} " $map | awk '{ print $2}')
+
+if [ $show_patch ]; then
+    hg log -r $hg_revision -p -v
+else
+    echo "$v -> $hg_revision"
+    echo
+fi
