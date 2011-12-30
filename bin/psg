@@ -1,11 +1,58 @@
-#!/bin/bash
+#!/usr/bin/env python
+# -*- encoding: utf8 -*-
 
-if [ $# -ne 1 ]; then
-    echo "pg <pattern>"
-    echo 
-    echo "Equal to \"ps -eLFw | grep -i --color <pattern>\" with a column head."
-    exit 1
-fi
+import sys
+import optparse
+import os
 
-echo "UID        PID  PPID   LWP  C NLWP    SZ   RSS PSR STIME TTY          TIME CMD"
-ps -eLFw | grep -i --color $1
+
+__author__ = 'fcamel'
+
+
+show_thread = False
+
+def header():
+    global show_thread
+
+    process='USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND'
+    thread='UID        PID  PPID   LWP  C NLWP    SZ   RSS PSR STIME TTY          TIME CMD'
+    head = thread if show_thread else process
+    print '\033[1;33m%s\033[0m' % head
+
+def run(pattern):
+    global show_thread
+
+    ps = 'ps -eLFw' if show_thread else 'ps auxw'
+    cmd = '%s | grep -v " %d " | grep -v grep | grep -i --color %s' % (ps, os.getpid(), pattern)
+    os.system(cmd)
+
+
+def main():
+    '''\
+    %prog [options] <pattern>
+
+    Grep <pattern> from ps output. Show process info by default.
+    '''
+    global show_thread
+
+    parser = optparse.OptionParser(usage=main.__doc__)
+    parser.add_option("-t", "--thread",
+                      action="store_true", dest="thread", default=False,
+                      help="Show thread info instead.")
+
+    options, args = parser.parse_args()
+
+    if len(args) != 1:
+        parser.print_help()
+        sys.exit(1)
+
+    show_thread = options.thread
+
+    header()
+    run(args[0])
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
