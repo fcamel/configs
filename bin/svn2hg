@@ -42,6 +42,7 @@ hg_revision=$(\grep "^${v} " $map | awk '{ print $2}')
 if [ $show_patch ]; then
     hg log -r $hg_revision -p -v
 else
+    hg_revision=$(hg log -r $hg_revision | head -1 | awk '{print $NF }')
     echo "$v -> $hg_revision"
     echo
 fi
