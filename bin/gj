@@ -11,6 +11,19 @@ import os
 __author__ = 'fcamel'
 
 
+def check_install():
+    for cmd in ['mkid', 'gid']:
+        ret = os.system('which %s > /dev/null' % cmd)
+        if ret != 0:
+            msg = (
+                "The program '%s' is currently not installed.  "
+                "You can install it by typing:\n"
+                "sudo apt-get install id-utils" % cmd
+            )
+            print msg
+            sys.exit(1)
+
+
 def gid(pattern):
     cmd = ['gid', pattern]
     process = subprocess.Popen(cmd,
@@ -57,6 +70,8 @@ def main():
         $ gj MyClient         # find any snippet which contains MyClient
         $ gj MyClient class   # find the definition.
     '''
+    check_install()
+
     parser = optparse.OptionParser(usage=main.__doc__)
     options, args = parser.parse_args()
 
