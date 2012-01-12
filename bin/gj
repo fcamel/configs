@@ -50,11 +50,20 @@ def show_list(tokens_list, patterns):
             code = code.replace(pattern, yellow_background(pattern))
         print '(%s) %s:%s:%s' % (red(i + 1), yellow(line_number), green(filename), code)
 
+def diff_list(kept, removed):
+    return [e for e in kept if e not in removed]
+
+def filter_statement(tokens_list, exclude):
+    matched = [tokens for tokens in tokens_list if re.search(';\s*$', tokens[2])]
+    if not exclude:
+        return matched
+    return diff_list(tokens_list, matched)
+
 def filter_filename(tokens_list, pattern, exclude):
     matched = [tokens for tokens in tokens_list if re.search(pattern, tokens[0])]
     if not exclude:
         return matched
-    return [tokens for tokens in tokens_list if tokens not in matched]
+    return diff_list(tokens_list, matched)
 
 def filter_pattern(tokens_list, pattern):
     return [tokens for tokens in tokens_list if re.search('\\b%s\\b' % pattern, tokens[2])]
@@ -102,8 +111,13 @@ def main():
 
         show_list(tokens_list, patterns)
         msg = (
-            '\n>> Input number to select a file, or type string (regex) to filter filename.'
-            '\n   !STRING means exclude the matched filename: '
+            '\nSelect an action:'
+            '\n* Input number to select a file.'
+            '\n* Type ";" / "!;" to keep / remove statements.'
+            '\n* Type STRING (regex) to filter filename. !STRING means exclude the matched filename: '
+            '\n* Type ENTER to exit.'
+            '\n'
+            '\n>> '
         )
         response = raw_input(msg).strip()
         if not response:
@@ -112,6 +126,12 @@ def main():
         if re.match('\d+', response):
             break
 
+        # Clean/Keep statements
+        if response in [';', '!;']:
+            tokens_list = filter_statement(tokens_list, response == '!;')
+            continue
+
+        # Clean/Keep based on filename
         if response[0] == '!':
             exclude = True
             response = response[1:]
