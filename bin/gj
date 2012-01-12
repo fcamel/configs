@@ -68,6 +68,64 @@ def filter_filename(tokens_list, pattern, exclude):
 def filter_pattern(tokens_list, pattern):
     return [tokens for tokens in tokens_list if re.search('\\b%s\\b' % pattern, tokens[2])]
 
+def filter_until_select(tokens_list, patterns):
+    '''
+    Return:
+        >0: selected number.
+         0: normal exit.
+        <0: error.
+    '''
+    tokens_list = tokens_list[:]  # Make a clone.
+
+    # Enter interactive mode.
+    while True:
+        if not tokens_list:
+            print 'No file matched.'
+            return 0, tokens_list
+
+        show_list(tokens_list, patterns)
+        msg = (
+            '\nSelect an action:'
+            '\n* Input number to select a file.'
+            '\n* Type ";" / "!;" to keep / remove statements.'
+            '\n* Type STRING (regex) to filter filename. !STRING means exclude the matched filename: '
+            '\n* Type ENTER to exit.'
+            '\n'
+            '\n>> '
+        )
+        response = raw_input(msg).strip()
+        if not response:
+            return 0, tokens_list
+
+        if re.match('\d+', response):
+            break
+
+        # Clean/Keep statements
+        if response in [';', '!;']:
+            tokens_list = filter_statement(tokens_list, response == '!;')
+            continue
+
+        # Clean/Keep based on filename
+        if response[0] == '!':
+            exclude = True
+            response = response[1:]
+        else:
+            exclude = False
+        tokens_list = filter_filename(tokens_list, response, exclude)
+
+    # Parse the selected number
+    try:
+        n = int(response)
+    except ValueError, e:
+        print 'Invalid input.'
+        return -1, tokens_list
+
+    if n < 1 or n > len(tokens_list):
+        print 'Invalid input.'
+        return -1, tokens_list
+
+    return n, tokens_list
+
 def main():
     '''\
     %prog [options] <pattern> [<pattern> ...]
@@ -103,57 +161,23 @@ def main():
     for pattern in patterns[1:]:
         tokens_list = filter_pattern(tokens_list, pattern)
 
-    # Enter interactive mode.
+    # Filter the rest or view the selected file.
     while True:
-        if not tokens_list:
-            print 'No file matched.'
+        n, tokens_list = filter_until_select(tokens_list, patterns)
+        if n <= 0:
+            if n < 0:
+                return 1
             return 0
 
-        show_list(tokens_list, patterns)
-        msg = (
-            '\nSelect an action:'
-            '\n* Input number to select a file.'
-            '\n* Type ";" / "!;" to keep / remove statements.'
-            '\n* Type STRING (regex) to filter filename. !STRING means exclude the matched filename: '
-            '\n* Type ENTER to exit.'
-            '\n'
-            '\n>> '
-        )
-        response = raw_input(msg).strip()
-        if not response:
-            return 0
+        # Edit the chosen one.
+        filename, line, _ = tokens_list[n - 1]
 
-        if re.match('\d+', response):
-            break
+        cmd = 'vi %s +%s' % (filename, line)
+        ret = os.system(cmd)
+        if ret != 0:
+            return 2
 
-        # Clean/Keep statements
-        if response in [';', '!;']:
-            tokens_list = filter_statement(tokens_list, response == '!;')
-            continue
-
-        # Clean/Keep based on filename
-        if response[0] == '!':
-            exclude = True
-            response = response[1:]
-        else:
-            exclude = False
-        tokens_list = filter_filename(tokens_list, response, exclude)
-
-    try:
-        n = int(response)
-    except ValueError, e:
-        print 'Invalid input.'
-        return 1
-
-    if n < 1 or n > len(tokens_list):
-        print 'Invalid input.'
-        return 1
-
-    # Edit the chosen one.
-    filename, line, _ = tokens_list[n - 1]
-
-    cmd = 'vi %s +%s' % (filename, line)
-    return os.system(cmd)
+    return 0
 
 
 if __name__ == '__main__':
