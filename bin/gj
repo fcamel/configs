@@ -180,7 +180,7 @@ def main():
         # Edit the chosen one.
         filename, line, _ = tokens_list[n - 1]
 
-        cmd = 'vi %s +%s -c/%s' % (filename, line, first_pattern)
+        cmd = 'vi %s -c/%s +%s' % (filename, first_pattern, line)
         ret = os.system(cmd)
         if ret != 0:
             return 2
