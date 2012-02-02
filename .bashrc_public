@@ -10,7 +10,7 @@ alias ll='ls -lF --color'
 alias ltr='ls -lFtr --color'
 alias ls='ls -F --color'
 alias scr='screen'
-alias h='history'
+alias h='history | tail -100'
 
 alias ms='sudo -u mysql rsync -av --delete'
 
