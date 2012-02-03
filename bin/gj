@@ -31,7 +31,7 @@ def gid(pattern):
                                stderr=subprocess.PIPE)
     return process.stdout.read().split('\n')
 
-def show_list(tokens_list, patterns, last_n):
+def show_list(tokens_list, patterns, last_n, fold):
     def yellow(text):
         return '\033[1;33m%s\033[0m' % text
 
@@ -48,7 +48,12 @@ def show_list(tokens_list, patterns, last_n):
         return '\033[1;30m%s\033[0m' % text
 
     os.system('clear')
+    last_filename = ''
     for i, (filename, line_number, code) in enumerate(tokens_list):
+        if fold and filename == last_filename:
+            continue
+
+        last_filename = filename
         i += 1
         if i == last_n:
             print black('(%s) %s:%s:%s' % (i, line_number, filename, code))
@@ -85,16 +90,19 @@ def filter_until_select(tokens_list, patterns, last_n):
     tokens_list = tokens_list[:]  # Make a clone.
 
     # Enter interactive mode.
+    if not hasattr(filter_until_select, 'fold'):
+        filter_until_select.fold = False
     while True:
         if not tokens_list:
             print 'No file matched.'
             return 0, tokens_list
 
-        show_list(tokens_list, patterns, last_n)
+        show_list(tokens_list, patterns, last_n, filter_until_select.fold)
         msg = (
             '\nSelect an action:'
             '\n* Input number to select a file.'
             '\n* Type ";" / "!;" to keep / remove statements.'
+            '\n* Type "." to switch between all matches and fold matches.'
             '\n* Type STRING (regex) to filter filename. !STRING means exclude the matched filename: '
             '\n* Type ENTER to exit.'
             '\n'
@@ -110,6 +118,10 @@ def filter_until_select(tokens_list, patterns, last_n):
         # Clean/Keep statements
         if response in [';', '!;']:
             tokens_list = filter_statement(tokens_list, response == '!;')
+            continue
+
+        if response == '.':
+            filter_until_select.fold = not filter_until_select.fold
             continue
 
         # Clean/Keep based on filename
