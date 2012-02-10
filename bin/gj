@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- encoding: utf8 -*-
 
+'''
+Change gen_command if you don't use vim.
+'''
+
 import re
 import subprocess
 import sys
@@ -11,6 +15,17 @@ import os
 __author__ = 'fcamel'
 
 
+#------------------------------------------------------------------------------
+# Configuration
+#------------------------------------------------------------------------------
+def gen_vim_command(filename, line, first_pattern):
+    return 'vi %s -c/%s +%s' % (filename, first_pattern, line)
+
+gen_command = gen_vim_command
+
+#------------------------------------------------------------------------------
+# Helper functions
+#------------------------------------------------------------------------------
 def check_install():
     for cmd in ['mkid', 'gid']:
         ret = os.system('which %s > /dev/null' % cmd)
@@ -145,6 +160,9 @@ def filter_until_select(tokens_list, patterns, last_n):
 
     return n, tokens_list
 
+#------------------------------------------------------------------------------
+# main
+#------------------------------------------------------------------------------
 def main():
     '''\
     %prog [options] <pattern> [<pattern> ...]
@@ -192,8 +210,7 @@ def main():
         # Edit the chosen one.
         filename, line, _ = tokens_list[n - 1]
 
-        cmd = 'vi %s -c/%s +%s' % (filename, first_pattern, line)
-        ret = os.system(cmd)
+        ret = os.system(gen_command(filename, line, first_pattern))
         if ret != 0:
             return 2
 
