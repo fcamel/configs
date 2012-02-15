@@ -18,8 +18,8 @@ __author__ = 'fcamel'
 #------------------------------------------------------------------------------
 # Configuration
 #------------------------------------------------------------------------------
-def gen_vim_command(filename, line, first_pattern):
-    return 'vi %s -c/%s +%s' % (filename, first_pattern, line)
+def gen_vim_command(filename, line, pattern):
+    return 'vi %s -c/%s +%s' % (filename, pattern, line)
 
 gen_command = gen_vim_command
 
@@ -38,13 +38,24 @@ def check_install():
             print msg
             sys.exit(1)
 
-
 def gid(pattern):
     cmd = ['gid', pattern]
     process = subprocess.Popen(cmd,
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
     return process.stdout.read().split('\n')
+
+def get_list(patterns):
+    first_pattern = patterns[0]
+
+    lines = gid(first_pattern)
+    tokens_list = [line.split(':', 2) for line in lines]
+    tokens_list = [ts for ts in tokens_list if len(ts) == 3]
+
+    for pattern in patterns[1:]:
+        tokens_list = filter_pattern(tokens_list, pattern)
+
+    return tokens_list
 
 def show_list(tokens_list, patterns, last_n, fold):
     def yellow(text):
@@ -110,7 +121,7 @@ def filter_until_select(tokens_list, patterns, last_n):
     while True:
         if not tokens_list:
             print 'No file matched.'
-            return 0, tokens_list
+            return 0, tokens_list, patterns
 
         show_list(tokens_list, patterns, last_n, filter_until_select.fold)
         msg = (
@@ -119,13 +130,14 @@ def filter_until_select(tokens_list, patterns, last_n):
             '\n* Type ";" / "!;" to keep / remove statements.'
             '\n* Type "." to switch between all matches and fold matches.'
             '\n* Type STRING (regex) to filter filename. !STRING means exclude the matched filename: '
+            '\n* Type ~PATTERN1 [PATTERN2 ...] to start over.'
             '\n* Type ENTER to exit.'
             '\n'
             '\n>> '
         )
         response = raw_input(msg).strip()
         if not response:
-            return 0, tokens_list
+            return 0, tokens_list, patterns
 
         if re.match('\d+', response):
             break
@@ -137,6 +149,11 @@ def filter_until_select(tokens_list, patterns, last_n):
 
         if response == '.':
             filter_until_select.fold = not filter_until_select.fold
+            continue
+
+        if response[0] == '~':
+            patterns = response[1:].split()
+            tokens_list = get_list(patterns)
             continue
 
         # Clean/Keep based on filename
@@ -152,13 +169,13 @@ def filter_until_select(tokens_list, patterns, last_n):
         n = int(response)
     except ValueError, e:
         print 'Invalid input.'
-        return -1, tokens_list
+        return -1, tokens_list, patterns
 
     if n < 1 or n > len(tokens_list):
         print 'Invalid input.'
-        return -1, tokens_list
+        return -1, tokens_list, patterns
 
-    return n, tokens_list
+    return n, tokens_list, patterns
 
 #------------------------------------------------------------------------------
 # main
@@ -187,21 +204,15 @@ def main():
         print 'Database file "ID" is not found. Have you run "mkid"?'
         return 2
 
-    # Find the initial matched set.
     patterns = args
-    first_pattern = patterns[0]
 
-    lines = gid(first_pattern)
-    tokens_list = [line.split(':', 2) for line in lines]
-    tokens_list = [ts for ts in tokens_list if len(ts) == 3]
-
-    for pattern in patterns[1:]:
-        tokens_list = filter_pattern(tokens_list, pattern)
+    # Find the initial matched set.
+    tokens_list = get_list(patterns)
 
     # Filter the rest or view the selected file.
     n = 0
     while True:
-        n, tokens_list = filter_until_select(tokens_list, patterns, n)
+        n, tokens_list, patterns = filter_until_select(tokens_list, patterns, n)
         if n <= 0:
             if n < 0:
                 return 1
@@ -210,7 +221,7 @@ def main():
         # Edit the chosen one.
         filename, line, _ = tokens_list[n - 1]
 
-        ret = os.system(gen_command(filename, line, first_pattern))
+        ret = os.system(gen_command(filename, line, patterns[0]))
         if ret != 0:
             return 2
 
