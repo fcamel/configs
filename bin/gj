@@ -23,6 +23,12 @@ def gen_vim_command(filename, line, pattern):
 
 gen_command = gen_vim_command
 
+# Input mappings
+A_KEEP_STATEMENT  = ';'
+A_CLEAN_STATEMENT = '!;'
+A_FOLD            = '.'
+A_RESTART         = '~'
+
 #------------------------------------------------------------------------------
 # Helper functions
 #------------------------------------------------------------------------------
@@ -127,13 +133,13 @@ def filter_until_select(tokens_list, patterns, last_n):
         msg = (
             '\nSelect an action:'
             '\n* Input number to select a file.'
-            '\n* Type ";" / "!;" to keep / remove statements.'
-            '\n* Type "." to switch between all matches and fold matches.'
+            '\n* Type "%s" / "%s" to keep / remove statements.'
+            '\n* Type "%s" to switch between all matches and fold matches.'
             '\n* Type STRING (regex) to filter filename. !STRING means exclude the matched filename: '
-            '\n* Type ~PATTERN1 [PATTERN2 ...] to start over.'
+            '\n* Type %sPATTERN1 [PATTERN2 ...] to start over.'
             '\n* Type ENTER to exit.'
             '\n'
-            '\n>> '
+            '\n>> ' % (A_KEEP_STATEMENT, A_CLEAN_STATEMENT, A_FOLD, A_RESTART)
         )
         response = raw_input(msg).strip()
         if not response:
@@ -143,15 +149,15 @@ def filter_until_select(tokens_list, patterns, last_n):
             break
 
         # Clean/Keep statements
-        if response in [';', '!;']:
-            tokens_list = filter_statement(tokens_list, response == '!;')
+        if response in [A_CLEAN_STATEMENT, A_KEEP_STATEMENT]:
+            tokens_list = filter_statement(tokens_list, response == A_CLEAN_STATEMENT)
             continue
 
-        if response == '.':
+        if response == A_FOLD:
             filter_until_select.fold = not filter_until_select.fold
             continue
 
-        if response[0] == '~':
+        if response[0] == A_RESTART:
             patterns = response[1:].split()
             tokens_list = get_list(patterns)
             continue
