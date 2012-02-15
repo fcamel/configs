@@ -3,6 +3,7 @@
 
 '''
 Change gen_command if you don't use vim.
+Change input mappings if you are not used to the default inputs.
 '''
 
 import re
