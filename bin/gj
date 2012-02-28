@@ -14,7 +14,7 @@ import subprocess
 import sys
 
 
-__author__ = 'fcamel, Owen'
+__author__ = 'fcamel, Owen Chu'
 
 
 #------------------------------------------------------------------------------
