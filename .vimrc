@@ -1,5 +1,6 @@
 syntax on
 set ignorecase
+set smartcase
 set ru
 set nu
 set showcmd
@@ -7,6 +8,7 @@ set hlsearch
 set cin
 set smartindent
 set nobackup
+set laststatus=2
 
 hi Comment ctermfg=red
 iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
@@ -60,6 +62,7 @@ filetype plugin on
 :set foldmethod=indent
 
 nnoremap <F12> :TlistToggle<CR>
+map <F4> :vs %:s#\.cpp$#.XY_CPP_XY#:s#\.h$#.cpp#:s#.XY_CPP_XY#.h#:s#\.cc$#.h#:s#\.[cC]$#.h#<CR>
 
 "use pydiction
 let g:pydiction_location = '~/.vim/pydiction/complete-dict'
