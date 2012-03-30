@@ -25,6 +25,7 @@ elseif expand("%") =~ ".*\.py"
 endif
 
 " Press ddd to insert codes that call IPython to help debug.
-imap ddd import IPythonIPython.embed()
+imap iii import IPythonIPython.embed()
+imap ddd import pdbpdb.set_trace()
 
 hi TempKeyword ctermfg=red
