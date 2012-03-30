@@ -25,6 +25,6 @@ elseif expand("%") =~ ".*\.py"
 endif
 
 " Press ddd to insert codes that call IPython to help debug.
-imap ddd import IPythonIPython.Shell.IPShellEmbed()()
+imap ddd import IPythonIPython.embed()
 
 hi TempKeyword ctermfg=red
