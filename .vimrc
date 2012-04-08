@@ -70,7 +70,7 @@ let g:pydiction_location = '~/.vim/pydiction/complete-dict'
 " map clipboard to the default register
 set clipboard=unnamed
 
-" temporarily highlight keyword 
+" temporarily highlight keyword
 nmap <leader>* :syn match TempKeyword /\<<C-R>=expand("<cword>")<CR>\>/<CR>
 nmap <leader>c :syn clear TempKeyword<CR>
 
@@ -97,27 +97,30 @@ autocmd BufNewFile *.c call LoadCMain()
 " Wrap the command in a function to achieve a silent call.
 function! GetMatched(pattern)
     let @/ = a:pattern
-    /
     execute "g/" . a:pattern . "/p"
 endfunction
 
 " Used by ShowMatched()
 " Open <filename> at <line_number> in the 'right place' according to <index>
 function! OpenMatchedInNewWindow(filename, line_number, index)
-    if a:index == 0
+    if a:index >= 12
+        return
+    endif
+
+    if a:index % 6 == 0
         execute "tabe +" . a:line_number . " " . a:filename
-    elseif a:index == 1 
+    elseif a:index % 6 == 1
         execute "vsplit +" . a:line_number . " " . a:filename
-    elseif a:index == 2
+    elseif a:index % 6 == 2
         execute "split +" . a:line_number . " " . a:filename
-    elseif a:index == 3
-        exe "normal! \<c-w>l"
+    elseif a:index % 6 == 3
+        execute "normal! \<c-w>l"
         execute "split +" . a:line_number . " " . a:filename
-    elseif a:index == 4
-        exe "normal! \<c-w>h"
+    elseif a:index % 6 == 4
+        execute "normal! \<c-w>h"
         execute "split +" . a:line_number . " " . a:filename
-    elseif a:index == 5
-        exe "normal! \<c-w>l"
+    elseif a:index % 6 == 5
+        execute "normal! \<c-w>l"
         execute "split +" . a:line_number . " " . a:filename
     else
         " Ignore.
