@@ -88,3 +88,76 @@ function LoadCMain()
 endfunction
 
 autocmd BufNewFile *.c call LoadCMain()
+
+"-----------------------------------------------------------
+" My functions
+"-----------------------------------------------------------
+
+" Used by ShowMatched()
+" Wrap the command in a function to achieve a silent call.
+function! GetMatched(pattern)
+    let @/ = a:pattern
+    /
+    execute "g/" . a:pattern . "/p"
+endfunction
+
+" Used by ShowMatched()
+" Open <filename> at <line_number> in the 'right place' according to <index>
+function! OpenMatchedInNewWindow(filename, line_number, index)
+    if a:index == 0
+        execute "tabe +" . a:line_number . " " . a:filename
+    elseif a:index == 1 
+        execute "vsplit +" . a:line_number . " " . a:filename
+    elseif a:index == 2
+        execute "split +" . a:line_number . " " . a:filename
+    elseif a:index == 3
+        exe "normal! \<c-w>l"
+        execute "split +" . a:line_number . " " . a:filename
+    elseif a:index == 4
+        exe "normal! \<c-w>h"
+        execute "split +" . a:line_number . " " . a:filename
+    elseif a:index == 5
+        exe "normal! \<c-w>l"
+        execute "split +" . a:line_number . " " . a:filename
+    else
+        " Ignore.
+    endif
+endfunction
+
+" Open a new tab with at most 6 windows where each window's cursor is at
+" the matched pattern in current file.
+function! ShowMatched(pattern)
+    redir @a
+    silent call GetMatched(a:pattern)
+    redir END
+    let alist = split(@a, "\n")
+
+    " Filter
+    let numbers = []
+    for line in alist
+        if match(line, '^\s*\d\+\s') < 0
+            continue
+        endif
+
+        let num = substitute(line, '^\s*\(\d\+\)\s.*', '\1', "")
+        if strlen(num) == 0
+            continue
+        endif
+
+        call add(numbers, num)
+    endfor
+
+    if len(numbers) <= 1
+        echo "No matched or only one matched."
+        return
+    endif
+
+    let i = 0
+    for line_number in numbers
+        call OpenMatchedInNewWindow("%", line_number, i)
+        let i += 1
+    endfor
+endfunction
+
+" Open a new tab to show where the word under the cursor is.
+nnoremap <silent> <Leader>f :call ShowMatched("\\<" . "<c-r><c-w>" . "\\>")<CR>nN
