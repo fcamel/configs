@@ -112,15 +112,16 @@ function! OpenMatchedInNewWindow(filename, line_number, index)
     elseif a:index % 6 == 1
         execute "vsplit +" . a:line_number . " " . a:filename
     elseif a:index % 6 == 2
+        execute "normal! \<c-w>l"
         execute "split +" . a:line_number . " " . a:filename
     elseif a:index % 6 == 3
-        execute "normal! \<c-w>l"
-        execute "split +" . a:line_number . " " . a:filename
-    elseif a:index % 6 == 4
         execute "normal! \<c-w>h"
         execute "split +" . a:line_number . " " . a:filename
-    elseif a:index % 6 == 5
+    elseif a:index % 6 == 4
         execute "normal! \<c-w>l"
+        execute "split +" . a:line_number . " " . a:filename
+    elseif a:index % 6 == 5
+        execute "normal! \<c-w>h"
         execute "split +" . a:line_number . " " . a:filename
     else
         " Ignore.
@@ -163,4 +164,4 @@ function! ShowMatched(pattern)
 endfunction
 
 " Open a new tab to show where the word under the cursor is.
-nnoremap <silent> <Leader>f :call ShowMatched("\\<" . "<c-r><c-w>" . "\\>")<CR>nN
+nnoremap <silent> <Leader>f :call ShowMatched("\\<" . "<c-r><c-w>" . "\\>")<CR>$N
