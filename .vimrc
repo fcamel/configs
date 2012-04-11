@@ -166,3 +166,9 @@ endfunction
 " Open a new tab to show where the word under the cursor is.
 nnoremap <silent> <Leader>f :call ShowMatched("\\<" . "<c-r><c-w>" . "\\>")<CR>$N
 nnoremap <silent> <Leader>F :call ShowMatched(input("Search for: "))<CR>
+
+
+"-----------------------------------------------------------
+" Customized setting
+"-----------------------------------------------------------
+so ~/.vimrc_private
