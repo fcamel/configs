@@ -126,6 +126,9 @@ function! OpenMatchedInNewWindow(filename, line_number, index)
     else
         " Ignore.
     endif
+
+    " unfold all if fold is used.
+    normal zR
 endfunction
 
 " Open a new tab with at most 6 windows where each window's cursor is at
