@@ -98,6 +98,7 @@ autocmd BufNewFile *.c call LoadCMain()
 function! GetMatched(pattern)
     let @/ = a:pattern
     execute "g/" . a:pattern . "/p"
+    execute "normal! \<c-o>"
 endfunction
 
 " Used by ShowMatched()
