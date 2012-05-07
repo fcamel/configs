@@ -14,10 +14,10 @@ graphlog =
 bookmarks =
 mq =
 record =
-hgattic = /home/hg/extensions/hgattic/attic.py
 rebase =
 transplant =
-prompt = /home/hg/extensions/hg-prompt/prompt.py
+hgsubversion = /home/hg/extensions/hgsubversion/hgsubversion
+hgshelve = /home/hg/extensions/hgshelve/hgshelve.py
 
 [bookmarks]
 track.current = True
@@ -30,3 +30,6 @@ editor = /usr/bin/gvim
 
 [extdiff] 
 cmd.vdiff = kdiff3 
+
+[extensions]
+histedit = /home/hg/extensions/histedit/hg_histedit.py
