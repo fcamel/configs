@@ -4,6 +4,7 @@ alias oc=octave
 alias vi='vi -X'
 alias pp='ps -eLFw'
 alias p='psg'
+alias ppp='ps axwwwo cmd,pid,ppid,pgrp,session,pcpu,state,cutime,cstime,utime,vsize,tty,start_time,uid,priority'
 alias g='grep -i --color'
 alias gg='grep -i --color=always'
 alias ll='ls -lF --color'
