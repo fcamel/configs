@@ -5,6 +5,8 @@ do
     cp -irp $f ~
 done
 
+touch ~/.vimrc_private
+
 echo -e "\nsource ~/.bashrc_public" >> ~/.bashrc
 echo -e "\nsource ~/.bashrc_private" >> ~/.bashrc
 
