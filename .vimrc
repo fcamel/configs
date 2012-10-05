@@ -171,6 +171,10 @@ endfunction
 nnoremap <silent> <Leader>f :call ShowMatched("\\<" . "<c-r><c-w>" . "\\>")<CR>$N
 nnoremap <silent> <Leader>F :call ShowMatched(input("Search for: "))<CR>
 
+" gj in vim
+let g:ackprg="gid_with_col.py"
+nnoremap <silent> <Leader>g :Ack<CR>
+
 
 "-----------------------------------------------------------
 " Customized setting
