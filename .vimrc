@@ -16,6 +16,10 @@ iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
 autocmd BufRead,BufNewFile *.sh map <F10> :% w !bash<CR>
 autocmd BufRead,BufNewFile *.pl map <F10> :% w !perl<CR>
 autocmd BufRead,BufNewFile *.rb map <F10> :% w !ruby<CR>
+augroup filetype
+  au! BufRead,BufNewFile *.proto setfiletype proto
+augroup end
+
 set sw=4 tabstop=4 smarttab expandtab
 
 map t <C-w>
