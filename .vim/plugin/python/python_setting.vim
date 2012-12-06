@@ -26,6 +26,6 @@ endif
 
 " Press ddd to insert codes that call IPython to help debug.
 imap iii import IPythonIPython.embed()
-imap ddd import pdbpdb.set_trace()
+imap ddd import ipdbipdb.set_trace()
 
 hi TempKeyword ctermfg=red
