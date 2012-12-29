@@ -16,6 +16,10 @@ iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
 autocmd BufRead,BufNewFile *.sh map <F10> :% w !bash<CR>
 autocmd BufRead,BufNewFile *.pl map <F10> :% w !perl<CR>
 autocmd BufRead,BufNewFile *.rb map <F10> :% w !ruby<CR>
+augroup filetype
+  au! BufRead,BufNewFile *.proto setfiletype proto
+augroup end
+
 set sw=4 tabstop=4 smarttab expandtab
 
 map t <C-w>
@@ -62,7 +66,7 @@ filetype plugin on
 :set foldmethod=indent
 
 nnoremap <F12> :TlistToggle<CR>
-map <F4> :vs %:s#\.cpp$#.XY_CPP_XY#:s#\.h$#.cpp#:s#.XY_CPP_XY#.h#:s#\.cc$#.h#:s#\.[cC]$#.h#<CR>
+nnoremap <silent> <F4> :call OpenComplementFile()<CR>
 
 "use pydiction
 let g:pydiction_location = '~/.vim/pydiction/complete-dict'
@@ -165,6 +169,27 @@ function! ShowMatched(pattern)
         call OpenMatchedInNewWindow("%", line_number, i)
         let i += 1
     endfor
+endfunction
+
+" Open .h if it's a cpp file, and vice versa.
+function! OpenComplementFile()
+  let f = expand('%')
+  let suffix = matchstr(f, '\.\a\+$')
+  let pattern = suffix . "$"
+  if suffix == '.h'
+    let target = substitute(f, pattern, '.cpp', '')
+    if !filereadable(target)
+      let target = substitute(f, pattern, '.cc', '')
+    endif
+  elseif suffix == '.cpp' || suffix == '.cc'
+    let target = substitute(f, pattern, '.h', '')
+  endif
+
+  if filereadable(target)
+    exec 'vsplit ' target
+  else
+    echo "Complement file not found"
+  endif
 endfunction
 
 " Open a new tab to show where the word under the cursor is.
