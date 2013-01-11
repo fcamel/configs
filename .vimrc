@@ -177,12 +177,17 @@ function! OpenComplementFile()
   let suffix = matchstr(f, '\.\a\+$')
   let pattern = suffix . "$"
   if suffix == '.h'
-    let target = substitute(f, pattern, '.cpp', '')
-    if !filereadable(target)
-      let target = substitute(f, pattern, '.cc', '')
-    endif
-  elseif suffix == '.cpp' || suffix == '.cc'
+    let suffixes = ['.cpp', '.cc', '.mm', '.m', '.h']
+    for suf in suffixes
+      let target = substitute(f, pattern, suf, '')
+      if filereadable(target)
+        break
+      endif
+    endfor
+  elseif suffix == '.cpp' || suffix == '.cc' || suffix == '.m' || suffix == '.mm'
     let target = substitute(f, pattern, '.h', '')
+  else
+    let target = ''
   endif
 
   if filereadable(target)
