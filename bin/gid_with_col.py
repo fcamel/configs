@@ -5,6 +5,7 @@ import re
 import subprocess
 import sys
 import optparse
+import platform
 
 class Match(object):
     def __init__(self, tokens, pattern):
@@ -27,7 +28,10 @@ class Match(object):
         return str(unicode(self))
 
 def _gid(pattern):
-    cmd = ['gid', pattern]
+    gid = 'gid'
+    if platform.system() == 'Darwin':
+        gid = 'gid32'
+    cmd = [gid, pattern]
     process = subprocess.Popen(cmd,
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
