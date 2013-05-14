@@ -169,6 +169,7 @@ function! ShowMatched(pattern)
         let i += 1
     endfor
 endfunction
+" Open a new tab to show where the word under the cursor is.
 nnoremap <silent> <Leader>f :call ShowMatched("\\<" . "<c-r><c-w>" . "\\>")<CR>$N
 nnoremap <silent> <Leader>F :call ShowMatched(input("Search for: "))<CR>
 
@@ -187,6 +188,13 @@ function! OpenComplementFile()
     endfor
   elseif suffix == '.cpp' || suffix == '.cc' || suffix == '.m' || suffix == '.mm'
     let target = substitute(f, pattern, '.h', '')
+    if !filereadable(target)
+      let tmp = target
+      let target = substitute(tmp, '\v(.+)\..+', 'public/\1.h', '')
+      if !filereadable(target)
+        let target = substitute(tmp, '\v(.+)/(.+)\.(.+)', '\1/public/\2.h', '')
+      endif
+    endif
   else
     let target = ''
   endif
