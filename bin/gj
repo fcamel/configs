@@ -11,6 +11,7 @@ import subprocess
 import sys
 import optparse
 import os
+import platform
 
 
 __author__ = 'fcamel'
@@ -33,20 +34,29 @@ A_RESTART         = '~'
 #------------------------------------------------------------------------------
 # Helper functions
 #------------------------------------------------------------------------------
+def get_gid_cmd():
+    gid = 'gid'
+    if platform.system() == 'Darwin':
+        gid = 'gid32'
+    return gid
+
 def check_install():
-    for cmd in ['mkid', 'gid']:
+    for cmd in ['mkid', get_gid_cmd()]:
         ret = os.system('which %s > /dev/null' % cmd)
         if ret != 0:
             msg = (
                 "The program '%s' is currently not installed.  "
-                "You can install it by typing:\n"
-                "sudo apt-get install id-utils" % cmd
+                "You can install it by typing:\n" % cmd
             )
+            if platform.system() == 'Darwin':
+                msg += "sudo port install idutils"
+            else:
+                msg += "sudo apt-get install id-utils"
             print msg
             sys.exit(1)
 
 def gid(pattern):
-    cmd = ['gid', pattern]
+    cmd = [get_gid_cmd(), pattern]
     process = subprocess.Popen(cmd,
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)

@@ -5,6 +5,7 @@ import re
 import subprocess
 import sys
 import optparse
+import platform
 
 class Match(object):
     def __init__(self, tokens, pattern):
@@ -21,17 +22,21 @@ class Match(object):
 
     def __unicode__(self):
         tokens = [self.filename, self.line_num, self.column, self.text]
-        return u':'.join(map(str, tokens))
+        return u':'.join(map(unicode, tokens))
 
     def __str__(self):
         return str(unicode(self))
 
 def _gid(pattern):
-    cmd = ['gid', pattern]
+    gid = 'gid'
+    if platform.system() == 'Darwin':
+        gid = 'gid32'
+    cmd = [gid, pattern]
     process = subprocess.Popen(cmd,
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
-    return process.stdout.read().split('\n')
+    return [line.decode('utf8')
+            for line in process.stdout.read().split('\n')]
 
 def _filter_pattern(matches, pattern):
     return [m for m in matches

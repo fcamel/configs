@@ -66,7 +66,6 @@ filetype plugin on
 :set foldmethod=indent
 
 nnoremap <F12> :TlistToggle<CR>
-nnoremap <silent> <F4> :call OpenComplementFile()<CR>
 
 "use pydiction
 let g:pydiction_location = '~/.vim/pydiction/complete-dict'
@@ -170,6 +169,8 @@ function! ShowMatched(pattern)
         let i += 1
     endfor
 endfunction
+nnoremap <silent> <Leader>f :call ShowMatched("\\<" . "<c-r><c-w>" . "\\>")<CR>$N
+nnoremap <silent> <Leader>F :call ShowMatched(input("Search for: "))<CR>
 
 " Open .h if it's a cpp file, and vice versa.
 function! OpenComplementFile()
@@ -177,12 +178,17 @@ function! OpenComplementFile()
   let suffix = matchstr(f, '\.\a\+$')
   let pattern = suffix . "$"
   if suffix == '.h'
-    let target = substitute(f, pattern, '.cpp', '')
-    if !filereadable(target)
-      let target = substitute(f, pattern, '.cc', '')
-    endif
-  elseif suffix == '.cpp' || suffix == '.cc'
+    let suffixes = ['.cpp', '.cc', '.mm', '.m', '.h']
+    for suf in suffixes
+      let target = substitute(f, pattern, suf, '')
+      if filereadable(target)
+        break
+      endif
+    endfor
+  elseif suffix == '.cpp' || suffix == '.cc' || suffix == '.m' || suffix == '.mm'
     let target = substitute(f, pattern, '.h', '')
+  else
+    let target = ''
   endif
 
   if filereadable(target)
@@ -191,10 +197,17 @@ function! OpenComplementFile()
     echo "Complement file not found"
   endif
 endfunction
+nnoremap <silent> <F4> :call OpenComplementFile()<CR>
 
-" Open a new tab to show where the word under the cursor is.
-nnoremap <silent> <Leader>f :call ShowMatched("\\<" . "<c-r><c-w>" . "\\>")<CR>$N
-nnoremap <silent> <Leader>F :call ShowMatched(input("Search for: "))<CR>
+fun! ShowFuncName()
+  let lnum = line(".")
+  let col = col(".")
+  echohl ModeMsg
+  echo getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bW'))
+  echohl None
+  call search("\\%" . lnum . "l" . "\\%" . col . "c")
+endfun
+map F :call ShowFuncName() <CR>
 
 " gj in vim
 let g:ackprg="gid_with_col.py"
