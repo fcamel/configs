@@ -221,6 +221,17 @@ map F :call ShowFuncName() <CR>
 let g:ackprg="gid_with_col.py"
 nnoremap <silent> <Leader>g :Ack<CR>
 
+"-----------------------------------------------------------
+" vundle
+"-----------------------------------------------------------
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
 
 "-----------------------------------------------------------
 " Customized setting
