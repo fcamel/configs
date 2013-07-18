@@ -5,8 +5,6 @@ do
     cp -irp $f ~
 done
 
-touch ~/.vimrc_private
-
 echo -e "\nsource ~/.bashrc_public" >> ~/.bashrc
 echo -e "\nsource ~/.bashrc_private" >> ~/.bashrc
 
@@ -15,3 +13,7 @@ chmod 600 ~/.bashrc_private
 
 mkdir -p ~/bin/
 cp -r bin/* ~/bin/
+
+# vim
+touch ~/.vimrc_private
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
