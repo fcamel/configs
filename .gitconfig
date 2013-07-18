@@ -1,10 +1,11 @@
 [user]
-	name = fcamel@gmail.com
-	email = fcamel@gmail.com
+  name = fcamel
+  email = fcamel@gmail.com
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+  diff = auto
+  status = auto
+  branch = auto
+  log = auto
 [alias]
-    ci = commit
-    st = status
+  ci = commit
+  st = status

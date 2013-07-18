@@ -170,3 +170,13 @@ function see() {
 complete -c command see
 
 ulimit -c unlimited
+
+#-------------------------------------------------------------------------------
+# Git
+#-------------------------------------------------------------------------------
+alias gl='git log --graph --stat'
+alias gs='git status'
+alias gd='git diff'
+alias gs='git status'
+alias gdc='git diff --cached'
+alias gc='git commit'
