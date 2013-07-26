@@ -1,7 +1,6 @@
 # NOTE: source bashrc_private before this
 
 alias oc=octave
-alias vi='vi -X'
 alias pp='ps -eLFw'
 alias p='psg'
 alias ppp='ps axwwwo cmd,pid,ppid,pgrp,session,pcpu,state,cutime,cstime,utime,vsize,tty,start_time,uid,priority'
@@ -75,9 +74,13 @@ source /usr/share/doc/cdargs/examples/cdargs-bash.sh
 # VI
 #-------------------------------------------------------------------------------
 export EDITOR='vim'
-
 set -o vi
 bind -m vi-insert "C-l":clear-screen
+
+function vi() {
+  file=$(echo $1 | sed 's/:\([0-9]\+\)$/ +\1/')
+  vim -X $file
+}
 
 
 #-------------------------------------------------------------------------------
