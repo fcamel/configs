@@ -11,10 +11,6 @@ autocmd BufRead,BufNewFile *.py set sw=4 tabstop=4 smarttab expandtab
 " Load Python indent
 so ~/.vim/indent/python.vim
 
-" Use 256 colors
-set t_Co=256
-colorscheme wombat256
-set cursorline
 let python_highlight_all = 1
 
 " Load template for normal script and test script.
@@ -27,5 +23,3 @@ endif
 " Press ddd to insert codes that call IPython to help debug.
 imap iii import IPythonIPython.embed()
 imap ddd import ipdbipdb.set_trace()
-
-hi TempKeyword ctermfg=red

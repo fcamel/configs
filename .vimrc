@@ -73,9 +73,25 @@ let g:pydiction_location = '~/.vim/pydiction/complete-dict'
 " map clipboard to the default register
 set clipboard=unnamed
 
+
+"-----------------------------------------------------------
+" Colors / Highlights
+"-----------------------------------------------------------
+
+" Use 256 colors
+set t_Co=256
+colorscheme wombat256
+set cursorline cursorcolumn
+hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white
+hi CursorColumn cterm=NONE ctermbg=darkyellow ctermfg=white
+
+hi KeywordTODO ctermfg=DarkGreen
+:syn match KeywordTODO "TODO"
+
 " temporarily highlight keyword
-nmap <leader>* :syn match TempKeyword /\<<C-R>=expand("<cword>")<CR>\>/<CR>
-nmap <leader>c :syn clear TempKeyword<CR>
+hi KeywordTemp ctermfg=red
+nmap <leader>* :syn match KeywordTemp /\<<C-R>=expand("<cword>")<CR>\>/<CR>
+nmap <leader>c :syn clear KeywordTemp<CR>
 
 " C/C++
 function LoadCppMain()
