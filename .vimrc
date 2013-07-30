@@ -236,7 +236,7 @@ map F :call ShowFuncName() <CR>
 " gj in vim
 let g:ackprg="gid_with_col.py"
 nnoremap <silent> <Leader>g :Ack<CR>
-nnoremap <silent> <Leader>G :Ack <C-R>=expand("<cword>")<CR> class<CR>
+nnoremap <silent> <Leader>G :Ack -d <C-R>=expand("<cword>")<CR> <CR>
 
 " C++ shortcut
 imap sss const std::string& 
