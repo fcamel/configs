@@ -254,6 +254,11 @@ Bundle 'gmarik/vundle'
 Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 
+" ctrlp setting
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_max_files = 1000000
+let g:ctrlp_user_command = 'find %s -type f'
+
 "-----------------------------------------------------------
 " Customized setting
 "-----------------------------------------------------------
