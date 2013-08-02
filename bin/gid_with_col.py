@@ -56,18 +56,49 @@ def get_list(patterns=None):
 
     return matches
 
+def _diff_list(kept, removed):
+    return [e for e in kept if e not in removed]
+
+def _filter_statement(all_, exclude):
+    matches = [m for m in all_ if re.search(';\s*$', m.text)]
+    if not exclude:
+        return matches
+    return _diff_list(all_, matches)
+
+def _filter_filename(all_, pattern, exclude):
+    matched = [m for m in all_ if re.search(pattern, m.filename)]
+    if not exclude:
+        return matched
+    return _diff_list(all_, matched)
+
+def find_declaration(pattern):
+    if pattern.startswith('m_') or pattern.startswith('s_'):
+        matches = get_list([pattern])
+        return _filter_filename(matches, '\.h$', False)
+
+    result = get_list([pattern, 'typedef'])
+    matches = get_list([pattern, 'class'])
+    matches = _filter_statement(matches, True)
+    result += matches
+    return result
+
 def main():
     '''\
     %prog [options] <pattern> [<pattern> ...]
     '''
     parser = optparse.OptionParser(usage=main.__doc__)
+    parser.add_option('-d', '--declaration', dest='declaration', action='store_true', default=False,
+                      help='Find possible declarations.')
     options, args = parser.parse_args()
 
     if len(args) < 1:
         parser.print_help()
         return 1
 
-    matches = get_list(args)
+    if options.declaration:
+        matches = find_declaration(args[0])
+    else:
+        matches = get_list(args)
     for m in matches:
         print unicode(m).encode('utf8')
 
