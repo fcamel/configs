@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for f in .bash_completions .bashrc_public .hgrc .screenrc .vim .vimrc
+for f in .bash_completions .bashrc_public .hgrc .screenrc .vim .vimrc .gdbinit
 do
     cp -irp $f ~
 done
@@ -13,6 +13,8 @@ chmod 600 ~/.bashrc_private
 
 mkdir -p ~/bin/
 cp -r bin/* ~/bin/
+mkdir -p ~/dev/
+cp -r gdb ~/dev/
 
 # vim
 touch ~/.vimrc_private
