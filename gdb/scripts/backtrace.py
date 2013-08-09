@@ -19,12 +19,16 @@ class ShorternBacktraceCommand(gdb.Command):
         fn = 0
         while f is not None:
             symtab_and_line = gdb.Frame.find_sal(f)
-            args = [
-                fn,
-                gdb.Frame.name(f),
-                symtab_and_line.symtab.filename,
-                symtab_and_line.line,
-            ]
+            frame_name = gdb.Frame.name(f)
+            if frame_name:
+                args = [
+                    fn,
+                    frame_name,
+                    symtab_and_line.symtab.filename,
+                    symtab_and_line.line,
+                ]
+            else:
+                args = [fn, '??', 'unknown', 0]
             lines.append('#%2d  %s at %s:%s' % tuple(args))
 
             f = gdb.Frame.older(f)
