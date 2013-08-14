@@ -55,7 +55,7 @@ class ShorternBacktraceCommand(gdb.Command):
             f = gdb.Frame.older(f)
             fn += 1
 
-        # Remain the target subset.
+        # Hold the subset.
         if num > 0:
             frames = frames[:num]
         elif num < 0:
