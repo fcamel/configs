@@ -71,14 +71,26 @@ def _filter_filename(all_, pattern, exclude):
         return matched
     return _diff_list(all_, matched)
 
-def find_declaration(pattern):
+def _keep_definition(all_, pattern):
+    new_pattern = ':%s(' % pattern
+    return [m for m in all_ if new_pattern in m.text]
+
+
+def find_declaration_or_definition(pattern):
     if pattern.startswith('m_') or pattern.startswith('s_'):
+        # For non-static member fields or static member fields,
+        # find symobls in header files.
         matches = get_list([pattern])
         return _filter_filename(matches, '\.h$', False)
 
-    result = get_list([pattern, 'typedef'])
+    # Find declaration if possible.
+    result = []
     matches = get_list([pattern, 'class'])
     matches = _filter_statement(matches, True)
+    result += matches
+    result += get_list([pattern, 'typedef'])
+    # Find definition if possible.
+    matches = _keep_definition(get_list([pattern]), pattern)
     result += matches
     return result
 
@@ -96,7 +108,7 @@ def main():
         return 1
 
     if options.declaration:
-        matches = find_declaration(args[0])
+        matches = find_declaration_or_definition(args[0])
     else:
         matches = get_list(args)
     for m in matches:
