@@ -22,10 +22,12 @@ augroup end
 
 set sw=4 tabstop=4 smarttab expandtab
 
-map t <C-w>
-map ,, :tabe %<CR>
-map qq :q<CR>
-map qa :wind q<CR>
+nmap t <C-w>
+nmap ,, :tabe %<CR>
+nmap qq :q<CR>
+nmap qa :wind q<CR>
+nmap L Lzz
+nmap <leader>/ /:<C-R>=expand("<cword>")<CR>(<CR>
 imap jj <ESC>
 imap jf <ESC>
 imap fj <ESC>
@@ -255,6 +257,7 @@ Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 
 " ctrlp setting
+let g:ctrlp_working_path_mode = ''
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 1000000
 let g:ctrlp_user_command = 'find %s -type f'
