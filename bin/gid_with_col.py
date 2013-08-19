@@ -89,6 +89,7 @@ def find_declaration_or_definition(pattern):
     matches = _filter_statement(matches, True)
     result += matches
     result += get_list([pattern, 'typedef'])
+    result += get_list([pattern, 'define'])
     # Find definition if possible.
     matches = _keep_definition(get_list([pattern]), pattern)
     result += matches
