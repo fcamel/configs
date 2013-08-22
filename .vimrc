@@ -9,6 +9,7 @@ set cin
 set smartindent
 set nobackup
 set laststatus=2
+set nowrapscan
 
 hi Comment ctermfg=red
 iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
@@ -255,6 +256,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
+Bundle 'tpope/vim-fugitive'
 
 " ctrlp setting
 let g:ctrlp_working_path_mode = ''
