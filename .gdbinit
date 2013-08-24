@@ -3,6 +3,14 @@ set history expansion on
 set history size 4096
 set history filename ~/.gdb_history
 
+# skip the next N line statements
+define j
+  if $argc == 1 && $arg0 > 0
+    tbreak +$arg0
+    jump +$arg0
+  end
+end
+
 # include pretty-print for STL.
 python
 import sys
