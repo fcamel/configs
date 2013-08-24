@@ -37,17 +37,20 @@ class ShorternBacktraceCommand(gdb.Command):
             symtab_and_line = gdb.Frame.find_sal(f)
             frame_name = gdb.Frame.name(f)
             if frame_name:
+                filename = None
+                if symtab_and_line.symtab:
+                    filename = symtab_and_line.symtab.filename
                 outs = (
                     fn,
                     frame_name,
-                    symtab_and_line.symtab.filename,
+                    filename if filename else '??',
                     symtab_and_line.line,
                 )
             else:
                 outs = (fn, '??', 'unknown', 0)
             head = '#%-2d  %s at %s:%s' % outs
             codes = None
-            if show_source and frame_name:
+            if show_source and frame_name and filename:
                 codes = read_source_code(symtab_and_line.symtab.fullname(),
                                          symtab_and_line.line,
                                          10)
