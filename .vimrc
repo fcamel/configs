@@ -9,7 +9,6 @@ set cin
 set smartindent
 set nobackup
 set laststatus=2
-set nowrapscan
 
 hi Comment ctermfg=red
 iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
@@ -110,6 +109,15 @@ function LoadCMain()
 endfunction
 
 autocmd BufNewFile *.c call LoadCMain()
+
+" bash
+function LoadBashTemplate()
+    0r ~/.vim/template/bash.sh
+    normal Gdd
+endfunction
+
+autocmd BufNewFile *.sh call LoadBashTemplate()
+
 
 "-----------------------------------------------------------
 " My functions
