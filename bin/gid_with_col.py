@@ -85,9 +85,10 @@ def find_declaration_or_definition(pattern):
 
     # Find declaration if possible.
     result = []
-    matches = get_list([pattern, 'class'])
-    matches = _filter_statement(matches, True)
-    result += matches
+    for type in ('class', 'struct'):
+        matches = get_list([pattern, type])
+        matches = _filter_statement(matches, True)
+        result += matches
     result += get_list([pattern, 'typedef'])
     result += get_list([pattern, 'define'])
     # Find definition if possible.
