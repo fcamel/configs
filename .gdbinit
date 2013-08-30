@@ -24,4 +24,6 @@ sys.path.insert(0, '/home/fcamel/dev/gdb/scripts')
 import backtrace
 end
 
+so ~/.gdbinit_private
+
 echo .gdbinit has been executed\n
