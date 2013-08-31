@@ -22,11 +22,16 @@ augroup end
 
 set sw=4 tabstop=4 smarttab expandtab
 
+
+let mapleader = "g"
+
 nmap t <C-w>
 nmap ,, :tabe %<CR>
 nmap qq :q<CR>
 nmap qa :wind q<CR>
 nmap L Lzz
+nmap <leader>h gT
+nmap <leader>l gt
 nmap <leader>/ /:<C-R>=expand("<cword>")<CR>(<CR>
 imap jj <ESC>
 imap jf <ESC>
