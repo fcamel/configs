@@ -23,7 +23,7 @@ augroup end
 set sw=4 tabstop=4 smarttab expandtab
 
 
-let mapleader = "g"
+let mapleader = "e"
 
 nmap t <C-w>
 nmap ,, :tabe %<CR>
