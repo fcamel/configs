@@ -97,8 +97,18 @@ hi KeywordTODO ctermfg=DarkGreen
 
 " temporarily highlight keyword
 hi KeywordTemp ctermfg=red
+hi KeywordTemp2 ctermfg=darkgreen
+hi KeywordTemp3 ctermfg=darkblue
 nmap <leader>* :syn match KeywordTemp /\<<C-R>=expand("<cword>")<CR>\>/<CR>
-nmap <leader>c :syn clear KeywordTemp<CR>
+nmap <leader>( :syn match KeywordTemp2 /\<<C-R>=expand("<cword>")<CR>\>/<CR>
+nmap <leader>) :syn match KeywordTemp3 /\<<C-R>=expand("<cword>")<CR>\>/<CR>
+nmap <leader>c :syn clear KeywordTemp<CR>:syn clear KeywordTemp2<CR>:syn clear KeywordTemp3<CR>
+
+syn match BacktracePrefix /\v^#[0-9]+/
+syn match BacktraceFileNum #\v[^ ]+/[^ ]+:[0-9]+$#
+hi BacktraceFileNum ctermfg=darkgreen guifg=green
+hi BacktracePrefix ctermfg=yellow guifg=yellow
+
 
 " C/C++
 function LoadCppMain()
@@ -250,7 +260,7 @@ endfun
 map F :call ShowFuncName() <CR>
 
 " gj in vim
-let g:ackprg="gid_with_col.py"
+let g:ackprg="gj_without_interaction"
 nnoremap <silent> <Leader>g :Ack<CR>
 nnoremap <silent> <Leader>G :Ack -d <C-R>=expand("<cword>")<CR> <CR>
 
