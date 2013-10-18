@@ -91,6 +91,8 @@ colorscheme wombat256
 set cursorline cursorcolumn
 hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white
 hi CursorColumn cterm=NONE ctermbg=darkyellow ctermfg=white
+" highlight current line and add marker. To return the this line, use 'l
+:nnoremap <silent> <Leader>L ml:execute 'match Search /\%'.line('.').'l/'<CR>
 
 hi KeywordTODO ctermfg=DarkGreen
 :syn match KeywordTODO "TODO"
