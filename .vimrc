@@ -72,7 +72,8 @@ filetype plugin on
 
 :set foldmethod=indent
 
-nnoremap <F12> :TlistToggle<CR>
+"nnoremap <F12> :TlistToggle<CR>
+nmap <F12> :TagbarToggle<CR>
 
 "use pydiction
 let g:pydiction_location = '~/.vim/pydiction/complete-dict'
@@ -289,6 +290,10 @@ let g:ctrlp_working_path_mode = ''
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 1000000
 let g:ctrlp_user_command = 'find %s -type f'
+"-----------------------------------------------------------
+" pathogen
+"-----------------------------------------------------------
+execute pathogen#infect()
 
 "-----------------------------------------------------------
 " Customized setting
