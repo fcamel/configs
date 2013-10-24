@@ -281,19 +281,29 @@ call vundle#rc()
 " let Vundle manage Vundle
 " required! 
 Bundle 'gmarik/vundle'
+
+" plugins on GitHub
 Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 Bundle 'tpope/vim-fugitive'
+Bundle 'scrooloose/syntastic'
+Bundle 'mileszs/ack.vim'
+
+" plugins not on GitHub
+Bundle 'git://github.com/majutsushi/tagbar'
+
+"-----------------------------------------------------------
+" Other plugins
+"-----------------------------------------------------------
 
 " ctrlp setting
 let g:ctrlp_working_path_mode = ''
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 1000000
 let g:ctrlp_user_command = 'find %s -type f'
-"-----------------------------------------------------------
-" pathogen
-"-----------------------------------------------------------
-execute pathogen#infect()
+
+" syntastics
+"let g:syntastic_python_checkers = ['flake8', 'pep257', 'pep8', 'py3kwarn', 'pyflakes', 'pylama', 'pylint', 'python']
 
 "-----------------------------------------------------------
 " Customized setting
