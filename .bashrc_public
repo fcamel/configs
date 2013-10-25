@@ -34,7 +34,7 @@ alias pc='pycscope.py -R .'
 export PAGER='less'
 export LESS=-ir
 
-export PATH=$PATH:~/bin
+export PATH="$PATH:$HOME/bin:$HOME/.vim/bundle/gj/bin"
 
 # Define your prefered "hostname" in .bashrc. Otherwise use the real hostname.
 if [ "$host" = "" ]; then
