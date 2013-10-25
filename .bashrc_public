@@ -27,6 +27,7 @@ alias cdvesrc='cd $(echo $PATH | ruby -ne '"'"'puts split(":")[0].split("/")[0..
 alias cdvesite='cd $(echo $PATH | ruby -ne '"'"'puts split(":")[0].split("/")[0..-2].join("/")'"'"')/lib/python2.5/site-packages/'
 
 alias pc='pycscope.py -R .'
+alias uc='export PATH="/usr/lib/ccache:$PATH"'
 
 # Provide tab completion for sqlite3.
 [ $(which rlwrap) ] && alias sqlite3='rlwrap -a -r sqlite3'
@@ -78,11 +79,16 @@ set -o vi
 bind -m vi-insert "C-l":clear-screen
 
 function vi() {
-  if [ $# -eq 1 ]; then
-    file=$(echo $1 | sed 's/:\([0-9]\+\)$/ +\1/')
-    vim -X $file
-  else
+  if [ $# -ne 1 ]; then
     vim -X $@
+  else
+    r=$(echo $1 | grep ":[0-9]\+:[0-9]\+:")
+    if [ "$?" -eq 0 ]; then
+      file=$(echo $1 | sed 's/:\([0-9]\+\):\([0-9]\+\):$/ +\1/')
+    else
+      file=$(echo $1 | sed 's/:\([0-9]\+\)$/ +\1/')
+    fi
+    vim -X $file
   fi
 }
 
