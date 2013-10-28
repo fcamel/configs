@@ -1,6 +1,8 @@
 [user]
   name = fcamel
   email = fcamel@gmail.com
+[github]
+	user = fcamel
 [color]
   diff = auto
   status = auto
@@ -9,3 +11,6 @@
 [alias]
   ci = commit
   st = status
+  unstage = reset HEAD
+  conflicts = diff --name-only --diff-filter=U
+  log-deleted = log --
