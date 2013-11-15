@@ -1,16 +1,24 @@
 # NOTE: source bashrc_private before this
 
+OS=$(uname)
+
 alias oc=octave
 alias pp='ps -eLFw'
 alias p='psg'
 alias ppp='ps axwwwo cmd,pid,ppid,pgrp,session,pcpu,state,cutime,cstime,utime,vsize,tty,start_time,uid,priority'
 alias g='grep -i --color'
 alias gg='grep -i --color=always'
-alias ll='ls -lF --color'
-alias ltr='ls -lFtr --color'
-alias ls='ls -F --color'
 alias scr='screen'
 alias h='history | tail -100'
+
+
+LS_COLOR_ARG="--color"
+if [ "$OS" = "Darwin" ]; then
+  LS_COLOR_ARG="-G"
+fi
+alias ll="ls -lF $LS_COLOR_ARG"
+alias ltr="ls -lFtr $LS_COLOR_ARG"
+alias ls="ls -F $LS_COLOR_ARG"
 
 alias ms='sudo -u mysql rsync -av --delete'
 
@@ -68,7 +76,11 @@ stty erase ^?
 complete -cf sudo
 
 # shortcut for cd
-source /usr/share/doc/cdargs/examples/cdargs-bash.sh
+if [ "$OS" = "Darwin" ]; then
+  source /opt/local/etc/profile.d/cdargs-bash.sh
+else
+  source /usr/share/doc/cdargs/examples/cdargs-bash.sh
+fi
 
 
 #-------------------------------------------------------------------------------
