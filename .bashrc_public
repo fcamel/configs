@@ -15,6 +15,7 @@ alias h='history | tail -100'
 LS_COLOR_ARG="--color"
 if [ "$OS" = "Darwin" ]; then
   LS_COLOR_ARG="-G"
+  export LSCOLORS=gxfxcxdxbxegedabagacad
 fi
 alias ll="ls -lF $LS_COLOR_ARG"
 alias ltr="ls -lFtr $LS_COLOR_ARG"
