@@ -13,4 +13,5 @@
   st = status
   unstage = reset HEAD
   conflicts = diff --name-only --diff-filter=U
+  outgoing = log origin/devel..devel
   log-deleted = log --
