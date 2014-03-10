@@ -241,6 +241,12 @@ function! OpenComplementFile()
         let target = substitute(tmp, '\v(.+)/(.+)\.(.+)', '\1/public/\2.h', '')
       endif
     endif
+  elseif suffix == '.py'
+    if matchstr(f, '_test.py') == '_test.py'
+      let target = substitute(f, '_test.py', '.py', '')
+    else
+      let target = substitute(f, '.py', '_test.py', '')
+    endif
   else
     let target = ''
   endif
