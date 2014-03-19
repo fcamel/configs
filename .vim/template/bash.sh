@@ -40,7 +40,7 @@ do
       ;;
     ?)
       usage
-      exit
+      exit 2
       ;;
   esac
 done
