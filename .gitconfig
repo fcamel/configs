@@ -16,3 +16,5 @@
   outgoing = log origin/devel..devel
   log-deleted = log --
   log-all = log --graph --branches --decorate --oneline
+[diff "localizablestrings"]
+    textconv = "iconv -f utf-16 -t utf-8"
