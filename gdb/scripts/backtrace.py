@@ -1,4 +1,5 @@
 import gdb
+import sys
 
 def read_source_code(filename, target_line, num_lines):
     with open(filename, 'r') as fr:
@@ -20,9 +21,20 @@ class ShorternBacktraceCommand(gdb.Command):
         show_source = False
         num = 0;
         args = arg.split()
-        for s in args:
+        skip_next_arg = False
+        output_filename = None
+        for i in range(len(args)):
+            if skip_next_arg:
+                skip_next_arg = False
+                continue
+
+            s = args[i]
             if s == '-s':
                 show_source = True
+            elif s == '-f':
+                if i + 1 < len(args):
+                    output_filename = args[i + 1]
+                    skip_next_arg = True
             else:
                 try:
                     num = int(s)
@@ -65,12 +77,17 @@ class ShorternBacktraceCommand(gdb.Command):
             frames = frames[len(frames) + num:]
 
         # Print the result.
+        output = sys.stdout
+        if output_filename:
+            output = open(output_filename, 'w')
         for head, codes in frames:
-            print head
+            output.write(head + '\n')
             if codes:
                 for line in codes:
-                    print line
-                print
+                    output.write(line + '\n')
+                output.write('\n')
+        if output_filename and output:
+            output.close()
 
 
 ShorternBacktraceCommand()
