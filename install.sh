@@ -19,3 +19,4 @@ cp -r gdb ~/dev/
 # vim
 touch ~/.vimrc_private
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+vim +PluginInstall +qall
