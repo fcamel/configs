@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for f in .bash_completions .bashrc_public .hgrc .screenrc .vim .vimrc .gdbinit
+for f in .bash_completions .bashrc_public .hgrc .screenrc .vim .vimrc .gdbinit .gitconfig
 do
     cp -irp $f ~
 done
