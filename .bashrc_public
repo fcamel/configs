@@ -14,8 +14,8 @@ alias h='history | tail -100'
 
 LS_COLOR_ARG="--color"
 if [ "$OS" = "Darwin" ]; then
-    LS_COLOR_ARG="-G"
-    export LSCOLORS=gxfxcxdxbxegedabagacad
+  LS_COLOR_ARG="-G"
+  export LSCOLORS=gxfxcxdxbxegedabagacad
 else:
     LS_COLORS='di=1;35'
     export LS_COLORS
@@ -29,6 +29,8 @@ alias ms='sudo -u mysql rsync -av --delete'
 alias mv='mv -i'
 alias cp='cp -i'
 alias rm='rm -i'
+
+alias sf="awk -F: '{print \$1}' | sort -u | xargs"
 
 alias vnc='vncserver -geometry 1440x900 -depth 24'
 alias vnc2='vncserver -geometry 1920x1200 -depth 24'
