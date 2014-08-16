@@ -2,6 +2,8 @@ import gdb
 import sys
 
 def read_source_code(filename, target_line, num_lines):
+    if not filename:
+        return []
     with open(filename, 'r') as fr:
         target_line -= 1
         lines = ['  | ' + line[:-1] for line in fr]
@@ -63,9 +65,11 @@ class ShorternBacktraceCommand(gdb.Command):
             head = '#%-2d  %s at %s:%s' % outs
             codes = None
             if show_source and frame_name and filename:
-                codes = read_source_code(symtab_and_line.symtab.fullname(),
-                                         symtab_and_line.line,
-                                         10)
+                tmp = read_source_code(symtab_and_line.symtab.fullname(),
+                                       symtab_and_line.line,
+                                       10)
+                if tmp:
+                    codes = tmp
             frames.append((head, codes))
             f = gdb.Frame.older(f)
             fn += 1
