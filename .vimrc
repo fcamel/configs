@@ -14,6 +14,8 @@ set tabpagemax=1000
 hi Comment ctermfg=red
 iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
 
+autocmd BufRead,BufNewFile *.tpl set filetype=html
+
 autocmd BufRead,BufNewFile *.sh map <F10> :% w !bash<CR>
 autocmd BufRead,BufNewFile *.pl map <F10> :% w !perl<CR>
 autocmd BufRead,BufNewFile *.rb map <F10> :% w !ruby<CR>
@@ -313,6 +315,7 @@ let g:ctrlp_user_command = 'find %s -type f'
 
 " syntastics
 "let g:syntastic_python_checkers = ['flake8', 'pep257', 'pep8', 'py3kwarn', 'pyflakes', 'pylama', 'pylint', 'python']
+let g:syntastic_html_checkers = []
 
 "-----------------------------------------------------------
 " Customized setting
