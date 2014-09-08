@@ -16,7 +16,7 @@ LS_COLOR_ARG="--color"
 if [ "$OS" = "Darwin" ]; then
   LS_COLOR_ARG="-G"
   export LSCOLORS=gxfxcxdxbxegedabagacad
-else:
+else
     LS_COLORS='di=1;35'
     export LS_COLORS
 fi
