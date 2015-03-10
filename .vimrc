@@ -104,7 +104,7 @@ hi KeywordTODO ctermfg=DarkGreen
 " temporarily highlight keyword
 hi KeywordTemp ctermfg=red
 hi KeywordTemp2 ctermfg=darkgreen
-hi KeywordTemp3 ctermfg=darkblue
+hi KeywordTemp3 ctermfg=cyan
 nmap <leader>* :syn match KeywordTemp /\<<C-R>=expand("<cword>")<CR>\>/<CR>
 nmap <leader>( :syn match KeywordTemp2 /\<<C-R>=expand("<cword>")<CR>\>/<CR>
 nmap <leader>) :syn match KeywordTemp3 /\<<C-R>=expand("<cword>")<CR>\>/<CR>
