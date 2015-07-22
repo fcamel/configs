@@ -10,6 +10,7 @@ set smartindent
 set nobackup
 set laststatus=2
 set tabpagemax=1000
+set encoding=utf8
 
 hi Comment ctermfg=red
 iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
@@ -261,21 +262,36 @@ function! OpenComplementFile()
 endfunction
 nnoremap <silent> <F4> :call OpenComplementFile()<CR>
 
-fun! ShowFuncName()
+fun! ShowFuncNameForCpp()
   let lnum = line(".")
   let col = col(".")
   echohl ModeMsg
+  " Find out the target line and echo it.
   echo getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bW'))
+  echohl None
+  " Go back to the original position.
+  call search("\\%" . lnum . "l" . "\\%" . col . "c")
+endfun
+
+fun! ShowFuncNameForJava()
+  let lnum = line(".")
+  let col = col(".")
+  echohl ModeMsg
+  echo getline(search(".*\\(private\\|protected\\|public\\) ", 'bW'))
   echohl None
   call search("\\%" . lnum . "l" . "\\%" . col . "c")
 endfun
-map F :call ShowFuncName() <CR>
 
-" gj in vim
-let g:ackprg="gj_without_interaction"
-nnoremap <silent> <Leader>g :Ack<CR>
-nnoremap <silent> <Leader>G :Ack -d1 <C-R>=expand("<cword>")<CR> <CR>
-nnoremap <silent> <Leader>d :Ack -d2 <C-R>=expand("<cword>")<CR> <CR>
+autocmd BufRead,BufNewFile *.c map F :call ShowFuncNameForCpp() <CR>
+autocmd BufRead,BufNewFile *.cc map F :call ShowFuncNameForCpp() <CR>
+autocmd BufRead,BufNewFile *.cpp map F :call ShowFuncNameForCpp() <CR>
+autocmd BufRead,BufNewFile *.java map F :call ShowFuncNameForJava() <CR>
+
+" gj in vim. These are set in the bundle.
+"let g:ackprg="gj_without_interaction"
+"nnoremap <silent> <Leader>g :Ack<CR>
+"nnoremap <silent> <Leader>G :Ack -d1 <C-R>=expand("<cword>")<CR> <CR>
+"nnoremap <silent> <Leader>d :Ack -d2 <C-R>=expand("<cword>")<CR> <CR>
 
 " C++ shortcut
 imap sss const std::string& 
@@ -313,9 +329,8 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 1000000
 let g:ctrlp_user_command = 'find %s -type f'
 
-" syntastics
+" syntastic
 "let g:syntastic_python_checkers = ['flake8', 'pep257', 'pep8', 'py3kwarn', 'pyflakes', 'pylama', 'pylint', 'python']
-let g:syntastic_html_checkers = []
 
 "-----------------------------------------------------------
 " Customized setting
