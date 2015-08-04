@@ -140,6 +140,14 @@ endfunction
 
 autocmd BufNewFile *.sh call LoadBashTemplate()
 
+" html
+function LoadHTMLTemplate()
+    0r ~/.vim/template/production.html
+    normal Gdd
+endfunction
+
+autocmd BufNewFile *.html call LoadHTMLTemplate()
+
 
 "-----------------------------------------------------------
 " My functions
