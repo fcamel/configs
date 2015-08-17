@@ -11,6 +11,7 @@ set nobackup
 set laststatus=2
 set tabpagemax=1000
 set encoding=utf8
+set bs=2
 
 hi Comment ctermfg=red
 iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
