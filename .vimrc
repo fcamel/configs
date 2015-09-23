@@ -35,8 +35,8 @@ nmap ,, :tabe %<CR>
 nmap qq :q<CR>
 nmap qa :wind q<CR>
 nmap L Lzz
-nmap <leader>h gT
-nmap <leader>l gt
+nmap <leader>[ gT
+nmap <leader>] gt
 nmap <leader>/ /:<C-R>=expand("<cword>")<CR>(<CR>
 imap jj <ESC>
 imap jf <ESC>
@@ -111,6 +111,7 @@ nmap <leader>* :syn match KeywordTemp /\<<C-R>=expand("<cword>")<CR>\>/<CR>
 nmap <leader>( :syn match KeywordTemp2 /\<<C-R>=expand("<cword>")<CR>\>/<CR>
 nmap <leader>) :syn match KeywordTemp3 /\<<C-R>=expand("<cword>")<CR>\>/<CR>
 nmap <leader>c :syn clear KeywordTemp<CR>:syn clear KeywordTemp2<CR>:syn clear KeywordTemp3<CR>
+nnoremap <F8> :execute ':syn match KeywordTemp /' . @/ . '/'<CR>:let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 
 syn match BacktracePrefix /\v^#[0-9]+/
 syn match BacktraceFileNum #\v[^ ]+/[^ ]+:[0-9]+$#
@@ -322,6 +323,7 @@ Bundle 'mattn/gist-vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/syntastic'
 Bundle 'mileszs/ack.vim'
+Bundle 'airblade/vim-gitgutter'
 Bundle 'fcamel/gj'
 
 " plugins not on GitHub
