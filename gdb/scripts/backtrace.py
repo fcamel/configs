@@ -8,8 +8,9 @@ def read_source_code(filename, target_line, num_lines):
         target_line -= 1
         lines = ['  | ' + line[:-1] for line in fr]
         lines[target_line] = '->| ' + lines[target_line][4:]
-        offset = num_lines / 2
-        return lines[target_line - offset : target_line + offset]
+        offset = int(num_lines / 2)
+        result = lines[target_line - offset : target_line + offset]
+        return result
 
 class ShorternBacktraceCommand(gdb.Command):
     '''Show a backtrace without argument info in each frame.'''
@@ -40,7 +41,7 @@ class ShorternBacktraceCommand(gdb.Command):
             else:
                 try:
                     num = int(s)
-                except Exception, e:
+                except Exception as e:
                     pass
 
         # Extract frame info.
