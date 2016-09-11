@@ -12,6 +12,7 @@ set laststatus=2
 set tabpagemax=1000
 set encoding=utf8
 set bs=2
+set wildmenu
 
 hi Comment ctermfg=red
 iab fdd <C-R>=strftime("%Y/%m/%d")<CR>
