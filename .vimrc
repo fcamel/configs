@@ -311,12 +311,15 @@ imap sss const std::string&
 "-----------------------------------------------------------
 " vundle
 "-----------------------------------------------------------
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
 " plugins on GitHub
 Bundle 'mattn/webapi-vim'
@@ -326,10 +329,16 @@ Bundle 'scrooloose/syntastic'
 Bundle 'mileszs/ack.vim'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'fcamel/gj'
+Bundle 'majutsushi/tagbar'
+Bundle 'Valloric/YouCompleteMe'
 
 " plugins not on GitHub
-Bundle 'git://github.com/majutsushi/tagbar'
 "Bundle 'file:///home/fcamel/dev/personal/gj'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 
 "-----------------------------------------------------------
 " plugins settings
@@ -343,6 +352,9 @@ let g:ctrlp_user_command = 'find %s -type f'
 
 " syntastic
 "let g:syntastic_python_checkers = ['flake8', 'pep257', 'pep8', 'py3kwarn', 'pyflakes', 'pylama', 'pylint', 'python']
+
+" YouCompleteMe
+let g:ycm_global_ycm_extra_conf = '<chrome_depot>/src/tools/vim/chromium.ycm_extra_conf.py'
 
 "-----------------------------------------------------------
 " Customized setting
