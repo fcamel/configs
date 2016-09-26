@@ -152,8 +152,6 @@ alias hgst='hg st -a -r -d -m'
 alias hlog='hg log -G | less'
 alias hlogv='hg log -G -v | less'
 
-source ~/.bash_completions/mercurial_bash_completion
-
 export HGMERGE=kdiff3
 export HGENCODING=utf-8
 
@@ -212,3 +210,4 @@ alias gs='git status'
 alias gdc='git diff --cached'
 alias gc='git commit'
 alias ga='git add'
+source ~/.bash_completions/git-completion.bash
