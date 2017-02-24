@@ -31,7 +31,7 @@ run()
 # Parse arguments.
 #--------------------------------------------------------------------
 
-while getopts “h” OPTION
+while getopts "h" OPTION
 do
   case $OPTION in
     h)
