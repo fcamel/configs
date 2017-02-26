@@ -32,7 +32,7 @@ clean_up()
 # $2: the text.
 cecho()
 {
-  echo -e "\n\03$1[1;33m$2\033[m"
+  echo -e "\n\033[1;3$1m$2\033[m"
 }
 
 run()
