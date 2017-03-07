@@ -29,10 +29,12 @@ clean_up()
 
 # echo colorful texts.
 # $1: 0-7, the color code.
-# $2: the text.
+# $2 and the rest: the text.
 cecho()
 {
-  echo -e "\n\033[1;3$1m$2\033[m"
+  color=$1
+  shift
+  echo -e "\n\033[1;3${color}m$@\033[m"
 }
 
 run()
