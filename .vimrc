@@ -26,7 +26,7 @@ augroup filetype
   au! BufRead,BufNewFile *.proto setfiletype proto
 augroup end
 
-set sw=4 tabstop=4 smarttab expandtab
+set sw=2 tabstop=2 smarttab expandtab
 
 
 let mapleader = "e"
