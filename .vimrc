@@ -322,15 +322,15 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " plugins on GitHub
-Bundle 'mattn/webapi-vim'
-Bundle 'mattn/gist-vim'
-Bundle 'tpope/vim-fugitive'
-Bundle 'scrooloose/syntastic'
-Bundle 'mileszs/ack.vim'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'fcamel/gj'
-Bundle 'majutsushi/tagbar'
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/syntastic'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'fcamel/gj'
+Plugin 'majutsushi/tagbar'
+Plugin 'mkitt/tabline.vim'
+"Plugin 'Valloric/YouCompleteMe'
 
 " plugins not on GitHub
 "Bundle 'file:///home/fcamel/dev/personal/gj'
@@ -349,6 +349,7 @@ let g:ctrlp_working_path_mode = ''
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 1000000
 let g:ctrlp_user_command = 'find %s -type f'
+let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 " syntastic
 "let g:syntastic_python_checkers = ['flake8', 'pep257', 'pep8', 'py3kwarn', 'pyflakes', 'pylama', 'pylint', 'python']
