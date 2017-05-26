@@ -114,9 +114,10 @@ def blame(commit, path, symbols):
             break
 
 
-        if n < 0 or n >= len(lines):
+        # The user input range: 1 .. len(lines).
+        if n <= 0 or n > len(lines):
             break
-        line = lines[n]
+        line = lines[n - 1]
         tokens = line.split()
         commit = tokens[0] + '~'
         path = tokens[1]
