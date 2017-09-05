@@ -47,7 +47,7 @@ alias uc='export PATH="/usr/lib/ccache:$PATH"'
 [ $(which rlwrap) ] && alias sqlite3='rlwrap -a -r sqlite3'
 
 export PAGER='less'
-export LESS=-ir
+export LESS=-iR
 
 export PATH="$PATH:$HOME/bin:$HOME/.vim/bundle/gj/bin"
 
