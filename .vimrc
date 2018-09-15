@@ -38,10 +38,18 @@ nmap qa :wind q<CR>
 nmap L Lzz
 nmap <leader>[ gT
 nmap <leader>] gt
-nmap <leader>/ /:<C-R>=expand("<cword>")<CR>(<CR>
 imap jj <ESC>
 imap jf <ESC>
 imap fj <ESC>
+
+let f = expand('%')
+let suffix = matchstr(f, '\.\a\+$')
+let pattern = suffix . "$"
+if suffix == '.cpp' || suffix == '.cc'
+  nmap <leader>/ /:<C-R>=expand("<cword>")<CR>(<CR>
+elseif suffix == '.go'
+  nmap <leader>/ /func .*<C-R>=expand("<cword>")<CR>(<CR>
+endif
 
 "open A_test.X if current file name is A.X
 "open A.X if current file name is A_test.X
@@ -330,7 +338,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'fcamel/gj'
 Plugin 'majutsushi/tagbar'
 Plugin 'mkitt/tabline.vim'
+Plugin 'rhysd/vim-clang-format'
 "Plugin 'Valloric/YouCompleteMe'
+Plugin 'fatih/vim-go'
 
 " plugins not on GitHub
 "Bundle 'file:///home/fcamel/dev/personal/gj'
@@ -338,6 +348,9 @@ Plugin 'mkitt/tabline.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+
+let g:go_version_warning = 0
 
 
 "-----------------------------------------------------------
