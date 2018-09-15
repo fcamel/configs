@@ -22,6 +22,7 @@ autocmd BufRead,BufNewFile *.tpl set filetype=html
 autocmd BufRead,BufNewFile *.sh map <F10> :% w !bash<CR>
 autocmd BufRead,BufNewFile *.pl map <F10> :% w !perl<CR>
 autocmd BufRead,BufNewFile *.rb map <F10> :% w !ruby<CR>
+autocmd BufRead,BufNewFile *.go map <F10> :GoRun<CR>
 augroup filetype
   au! BufRead,BufNewFile *.proto setfiletype proto
 augroup end
