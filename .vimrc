@@ -90,6 +90,17 @@ filetype plugin on
 "nnoremap <F12> :TlistToggle<CR>
 nmap <F12> :TagbarToggle<CR>
 
+" set status line
+set statusline =
+" File description
+set statusline +=%f
+" Name of the current function (needs tagbar)
+set statusline +=\ >>\ %{tagbar#currenttag('%s','')}
+" Total number of lines in the file
+set statusline +=%=%-10L
+" Line, column and percentage
+set statusline +=%=%-14.(%l,%c%V%)\ %P
+
 "use pydiction
 let g:pydiction_location = '~/.vim/pydiction/complete-dict'
 
@@ -341,7 +352,10 @@ Plugin 'majutsushi/tagbar'
 Plugin 'mkitt/tabline.vim'
 Plugin 'rhysd/vim-clang-format'
 "Plugin 'Valloric/YouCompleteMe'
+
+" Go
 Plugin 'fatih/vim-go'
+Plugin 'jstemmer/gotags'
 
 " plugins not on GitHub
 "Bundle 'file:///home/fcamel/dev/personal/gj'
@@ -370,6 +384,36 @@ let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf = '<chrome_depot>/src/tools/vim/chromium.ycm_extra_conf.py'
+
+" Go
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
 
 "-----------------------------------------------------------
 " Customized setting
