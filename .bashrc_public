@@ -26,7 +26,7 @@ alias g='grep -i --color'
 alias gg='grep -i --color=always'
 alias scr='screen'
 alias h='history | tail -100'
-
+alias vf='vim $(fzf)'
 
 LS_COLOR_ARG="--color"
 if [ "$OS" = "Darwin" ]; then
