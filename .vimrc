@@ -32,6 +32,7 @@ set sw=2 tabstop=2 smarttab expandtab
 
 let mapleader = "e"
 
+nmap <F9> :tab sp<CR>
 nmap t <C-w>
 nmap ,, :tabe %<CR>
 nmap qq :q<CR>
@@ -115,9 +116,6 @@ set clipboard=unnamed
 " Use 256 colors
 set t_Co=256
 colorscheme wombat256
-set cursorline cursorcolumn
-hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white
-hi CursorColumn cterm=NONE ctermbg=darkyellow ctermfg=white
 " highlight current line and add marker. To return the this line, use 'l
 :nnoremap <silent> <Leader>L ml:execute 'match Search /\%'.line('.').'l/'<CR>
 
@@ -125,8 +123,8 @@ hi KeywordTODO ctermfg=DarkGreen
 :syn match KeywordTODO "TODO"
 
 " temporarily highlight keyword
-hi KeywordTemp ctermfg=red
-hi KeywordTemp2 ctermfg=darkgreen
+hi KeywordTemp ctermfg=white ctermbg=darkgreen
+hi KeywordTemp2 ctermfg=red
 hi KeywordTemp3 ctermfg=cyan
 nmap <leader>* :syn match KeywordTemp /\<<C-R>=expand("<cword>")<CR>\>/<CR>
 nmap <leader>( :syn match KeywordTemp2 /\<<C-R>=expand("<cword>")<CR>\>/<CR>
@@ -138,6 +136,14 @@ syn match BacktracePrefix /\v^#[0-9]+/
 syn match BacktraceFileNum #\v[^ ]+/[^ ]+:[0-9]+$#
 hi BacktraceFileNum ctermfg=darkgreen guifg=green
 hi BacktracePrefix ctermfg=yellow guifg=yellow
+
+" cursor line/column
+set cursorline cursorcolumn
+hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white
+hi CursorColumn cterm=NONE ctermbg=darkyellow ctermfg=white
+autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
+autocmd WinLeave * setlocal nocursorcolumn
+
 
 
 " C/C++
@@ -351,7 +357,8 @@ Plugin 'fcamel/gj'
 Plugin 'majutsushi/tagbar'
 Plugin 'mkitt/tabline.vim'
 Plugin 'rhysd/vim-clang-format'
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'junegunn/fzf.vim'
 
 " Go
 Plugin 'fatih/vim-go'
@@ -413,6 +420,16 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+let g:tagbar_left = 1
+
+set updatetime=100
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 1
+let g:go_fmt_command = "goimports"
+
+
+nmap <F2> :GoDescribe<CR>
 
 
 "-----------------------------------------------------------
