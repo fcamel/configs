@@ -116,6 +116,9 @@ set clipboard=unnamed
 " Use 256 colors
 set t_Co=256
 colorscheme wombat256
+set cursorline cursorcolumn
+hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white
+hi CursorColumn cterm=NONE ctermbg=darkyellow ctermfg=white
 " highlight current line and add marker. To return the this line, use 'l
 :nnoremap <silent> <Leader>L ml:execute 'match Search /\%'.line('.').'l/'<CR>
 
@@ -143,8 +146,6 @@ hi CursorLine cterm=NONE ctermbg=darkyellow ctermfg=white
 hi CursorColumn cterm=NONE ctermbg=darkyellow ctermfg=white
 autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
 autocmd WinLeave * setlocal nocursorcolumn
-
-
 
 " C/C++
 function LoadCppMain()
@@ -357,7 +358,7 @@ Plugin 'fcamel/gj'
 Plugin 'majutsushi/tagbar'
 Plugin 'mkitt/tabline.vim'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'junegunn/fzf.vim'
 
 " Go
@@ -388,6 +389,10 @@ let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 " syntastic
 "let g:syntastic_python_checkers = ['flake8', 'pep257', 'pep8', 'py3kwarn', 'pyflakes', 'pylama', 'pylint', 'python']
+let g:syntastic_python_python_exec = '/opt/local/bin/python3'
+let g:syntastic_mode_map = {
+    \ "mode": "active",
+    \ "passive_filetypes": ["java"] }
 
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf = '<chrome_depot>/src/tools/vim/chromium.ycm_extra_conf.py'
